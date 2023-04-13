@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" prefHeight="550.0" prefWidth="764.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Planning.AfficherPlanningController">
+   <children>
+      <ListView fx:id="listeH" layoutX="171.0" layoutY="84.0" onMouseClicked="#modifierHotel" prefHeight="531.0" prefWidth="918.0" AnchorPane.bottomAnchor="83.0" AnchorPane.leftAnchor="171.0" AnchorPane.rightAnchor="141.0" AnchorPane.topAnchor="84.0" />
+      <TextField layoutX="1183.0" layoutY="36.0" prefHeight="29.0" prefWidth="149.0" promptText="Rechercher..." AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="36.0" />
+      <Button layoutX="6.0" layoutY="39.0" mnemonicParsing="false" onAction="#AjouterHotel" prefHeight="30.0" prefWidth="159.0" text="Ajouter un Planning" textOverrun="CLIP" AnchorPane.leftAnchor="6.0" AnchorPane.topAnchor="39.0">
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font>
+      </Button>
+      <Label layoutX="245.0" layoutY="19.0" prefHeight="40.0" prefWidth="353.0" text="La Liste des Planning" textFill="#d05b5b">
+         <font>
+            <Font name="System Bold Italic" size="21.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>
