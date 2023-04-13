@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" fx:id="toolpane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.pidev.event.ToolInterfaceController">
+   <children>
+      <VBox layoutX="18.0" layoutY="24.0" prefHeight="215.0" prefWidth="59.0" spacing="15.0">
+         <children>
+            <Label text="ID">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Label text="name">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Label text="returned">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+         </children>
+      </VBox>
+      <VBox layoutX="77.0" layoutY="14.0" prefHeight="193.0" prefWidth="145.0" spacing="15.0">
+         <children>
+            <TextField fx:id="tfIdTool" prefHeight="25.0" prefWidth="131.0" />
+            <TextField fx:id="tfNameTool" />
+            <CheckBox fx:id="cbReturnedTool" mnemonicParsing="false" text="CheckBox" />
+         </children>
+      </VBox>
+      <TableView fx:id="tvTools" layoutX="240.0" layoutY="3.0" onMouseClicked="#handleMouseAction" prefHeight="302.0" prefWidth="355.0">
+        <columns>
+          <TableColumn fx:id="colIdTool" prefWidth="75.0" text="id" />
+          <TableColumn fx:id="colNameTool" prefWidth="190.0" text="name" />
+            <TableColumn fx:id="colReturned" prefWidth="85.0" text="returned" />
+        </columns>
+      </TableView>
+      <Button fx:id="btnInsertTool" layoutX="25.0" layoutY="331.0" mnemonicParsing="false" onAction="#handleButtonAction" text="insert" />
+      <Button fx:id="btnUpdateTool" layoutX="114.0" layoutY="331.0" mnemonicParsing="false" onAction="#handleButtonAction" text="update" />
+      <Button fx:id="btnDeleteTool" layoutX="196.0" layoutY="331.0" mnemonicParsing="false" onAction="#handleButtonAction" text="delete" />
+      <Button fx:id="loadEvents" layoutX="502.0" layoutY="344.0" mnemonicParsing="false" onAction="#loadEvents" text="events" />
+   </children>
+</AnchorPane>
