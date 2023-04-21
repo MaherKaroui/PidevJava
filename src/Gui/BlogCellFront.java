@@ -6,7 +6,10 @@
 package Gui;
 
 import Entity.Blog;
+import Service.BlogService;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.fxml.FXMLLoader;
@@ -54,6 +57,8 @@ public class BlogCellFront extends ListCell<Blog>  {
 
     imageView.setFitWidth(100); // définir une largeur de 100 pixels
     imageView.setFitHeight(100);
+            this.setOnMouseClicked(event -> handleArticleClick());
+
     this.setOnMouseClicked(event -> {
          
         // Implémentez le code que vous souhaitez exécuter lorsque vous cliquez sur la cellule ici
@@ -77,7 +82,11 @@ public class BlogCellFront extends ListCell<Blog>  {
                 Logger.getLogger(BlogCell.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-    });
+       
+       
+});
+
+   
 }
 
 
@@ -109,5 +118,28 @@ public class BlogCellFront extends ListCell<Blog>  {
         VBox vBox = new VBox(hBox, separator);
         return hBox;
     }
+
+    private void handleArticleClick() {
+        Blog blog = getItem();
+        if (blog != null) {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("DetailsFront.fxml"));
+            Parent root;
+            try {
+                root = loader.load();
+                DetailsFrontController controller = loader.getController();
+                controller.updateBlogDetails(blog);
+                Scene scene = new Scene(root);
+                javafx.stage.Stage stage = new javafx.stage.Stage();
+                stage.initModality(javafx.stage.Modality.APPLICATION_MODAL);
+                stage.setTitle("Détails du blog");
+                stage.setResizable(false);
+                stage.setScene(scene);
+                stage.show();
+            } catch (IOException ex) {
+                Logger.getLogger(BlogCellFront.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
+    }
     
-}
+

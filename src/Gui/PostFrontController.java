@@ -1,3 +1,4 @@
+//blogCell
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -6,6 +7,7 @@
 package Gui;
 
 import Entity.Blog;
+import Entity.comment;
 import Service.BlogService;
 import java.io.IOException;
 import java.net.URL;
@@ -26,6 +28,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -44,6 +48,11 @@ public class PostFrontController implements Initializable {
     private Label lbauteur;
     private Label lbcontenu;
     private ScrollPane ScrolPosts;
+    @FXML
+private TextField emailTextField;
+     @FXML
+    private TextArea commentaireTextArea;
+
 
     /**
      * Initializes the controller class.
@@ -119,4 +128,33 @@ private DetailsFrontController detailsFrontController;
         } catch (IOException e) {
         }
 
-    }}
+    }
+    private void ajouterCommentaire(ActionEvent event) {
+ int postId = prefs.getInt("selecteBlogID", -1);
+if (postId == -1) {
+    // No post is selected, so cannot add comment
+    return;
+}
+
+BlogService blogService = new BlogService();
+Blog selectedPost = blogService.getBlogById(postId);
+comment newComment = new comment();
+newComment.setId_article(selectedPost.getID());
+String email = emailTextField.getText();
+String contenu_c = commentaireTextArea.getText();
+
+newComment.setEmail(email);
+newComment.setContenu_c(contenu_c);
+selectedPost.addComment(newComment);
+blogService.ModifierBlog2(selectedPost);
+
+
+
+
+}
+    @FXML
+private void handleAjouterCommentaire(ActionEvent event) {
+    ajouterCommentaire(event);
+}
+
+}

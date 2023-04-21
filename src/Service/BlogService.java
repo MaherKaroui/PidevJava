@@ -732,5 +732,23 @@ c.setApproved(rs.getInt("approved"));
         return id;
     }
 
+   public Blog getBlogById(int postId) {
+    // Get a list of all the blogs
+    List<Blog> blogs = Recuperer();
+
+    // Find the blog with the specified ID
+    for (Blog blog : blogs) {
+        if (blog.getID() == postId) {
+            return blog;
+        }
+    }
+
+    // If no blog was found with the specified ID, return null
+    return null;
+}
+
+
+  
+
 
 }

@@ -35,6 +35,10 @@ import javafx.scene.text.FontWeight;
  */
 public class BlogCell extends ListCell<Blog> {
 
+    static Object getSelectionModel() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
     private ImageView imageView = new ImageView();
     private Label titre_article = new Label();
     private Label auteur_article = new Label();

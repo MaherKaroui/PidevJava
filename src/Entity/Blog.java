@@ -330,7 +330,21 @@ int id_categorie = categorie.getId(); // Utiliser la méthode getId() pour obten
         return this.comments;
     }
 
+    public List<String> getUrls_images() {
+  List<String> urls = new ArrayList<>();
+    // add the URLs of images to the list
+    urls.add("file:/C:/Users/saada/OneDrive/Bureau/test_desck/175.jpg");
+
+  return urls;
+
 
    }
+    public void addComment(comment comment) {
+        if (this.comments == null) {
+            this.comments = new ArrayList<>();
+        }
+        this.comments.add(comment);
+    }
+}
 
 
