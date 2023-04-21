@@ -747,6 +747,43 @@ c.setApproved(rs.getInt("approved"));
     return null;
 }
 
+public void removeLike(int likeId) {
+    try {
+        String sql = "DELETE FROM like WHERE id = ?";
+        PreparedStatement stmt = cnx.prepareStatement(sql);
+        stmt.setInt(1, likeId);
+        int rowsDeleted = stmt.executeUpdate();
+        if (rowsDeleted > 0) {
+            System.out.println("Le like a été supprimé avec succès !");
+        } else {
+            System.out.println("Aucun like n'a été supprimé.");
+        }
+        cnx.close();
+    } catch (SQLException e) {
+        System.out.println("Erreur lors de la suppression du like : " + e.getMessage());
+    }
+}
+
+  public List<PostLike> getLikesByPost(Blog post) {
+    List<PostLike> likes = new ArrayList<>();
+    try {
+        String query = "SELECT * FROM `like` WHERE articles_id = ?";
+        PreparedStatement pstmt = cnx.prepareStatement(query);
+        pstmt.setInt(1, post.getID());
+        ResultSet rs = pstmt.executeQuery();
+        while (rs.next()) {
+            PostLike like = new PostLike();
+            like.setId(rs.getInt("id"));
+            like.setUser_id(rs.getInt("user_id"));
+            like.setArticles_id(rs.getInt("articles_id"));
+            likes.add(like);
+        }
+    } catch (SQLException ex) {
+        System.out.println(ex.getMessage());
+    }
+    return likes;
+}
+
 
   
 

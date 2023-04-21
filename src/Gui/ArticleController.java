@@ -262,11 +262,9 @@ private void Menu(ActionEvent event) throws IOException {
         contenu_c.setText(t.getContenu_article());
         Image image = new Image(getClass().getResourceAsStream(t.getImage()));
        t.setImage("file:/C:Bureau/test_desck/img/");
-        // Pour un CheckBox
-       // Modifier l'état de la case à cocher
+        
   Scene scene = checkbest.getScene();
 
-    // Utiliser l'objet Scene pour accéder à l'élément checkbest
     CheckBox checkbestInScene = (CheckBox) scene.lookup("#checkbest");
     checkbestInScene.setSelected(true);
     checkbestInScene.setIndeterminate(true);

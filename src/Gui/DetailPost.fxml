@@ -71,6 +71,12 @@
                 </font>
             </Label>
             <TextField fx:id="tflikes" layoutX="850.0" layoutY="521.0" prefHeight="31.0" prefWidth="104.0" />
+      <Button layoutX="704.0" layoutY="692.0" mnemonicParsing="false" onAction="#PDF" prefHeight="48.0" prefWidth="78.0" />
+      <ImageView fitHeight="38.0" fitWidth="53.0" layoutX="719.0" layoutY="697.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../superMarket/image/print.png" />
+         </image>
+      </ImageView>
         
 
     </children>

@@ -9,6 +9,7 @@ import Entity.Blog;
 import Entity.comment;
 import Service.BlogService;
 import Service.CommentService;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -26,6 +27,7 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
+import javax.swing.text.Document;
 
 /**
  * FXML Controller class
@@ -120,6 +122,8 @@ if (blog.getIs_best() == 1) {
         
         
     }
+
+ 
 
 
 
