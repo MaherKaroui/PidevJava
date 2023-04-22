@@ -1,0 +1,14 @@
+.header {
+    -fx-background-color: linear-gradient(to bottom right, #1d1d1b, #ff8b00);
+    -fx-border-color: #000000;
+    -fx-border-width: 0 0 .8px 0;
+}
+
+.nav-form {
+    -fx-background-color: linear-gradient(to bottom right, #1d1d1b, #000000);
+}
+
+.nav-btn {
+    -fx-background-color: #7fbf7f;
+    -fx-text-fill: white;
+}

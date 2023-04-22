@@ -56,10 +56,10 @@ public class LoggedInController implements Initializable {
     private TextField Recherche_User;
     @FXML
     private TableView<User> tvUsers;
-    
+
     @FXML
     private Button button_logout;
-   @FXML
+    @FXML
     private TableColumn<User, Integer> id;
     @FXML
     private TableColumn<User, String> email;
@@ -80,27 +80,26 @@ public class LoggedInController implements Initializable {
     private TextField emails;
     @FXML
     private TextField ids;
-     @FXML
+    @FXML
     private TextField num_telephones;
     @FXML
     private TextField noms;
     @FXML
     private TextField prenoms;
-     @FXML
+    @FXML
     private TextField roless;
     @FXML
     private TextField scores;
     @FXML
     private TextField nb_etoiles;
-    
-    
+
     @FXML
     private Button refresh;
     @FXML
     private Button modifier;
     @FXML
     private Button supprimer;
-    
+
     private Connection cnx;
     private Statement statement;
     private PreparedStatement prepare;
@@ -113,53 +112,67 @@ public class LoggedInController implements Initializable {
         //showRec();
         addButtonToTable();
         ObservableList<User> listm = getUserList();
-             
-       email.setCellValueFactory(new PropertyValueFactory<>("email"));
+
+        email.setCellValueFactory(new PropertyValueFactory<>("email"));
         id.setCellValueFactory(new PropertyValueFactory<>("id"));
         num_telephone.setCellValueFactory(new PropertyValueFactory<>("num_telephone"));
         roles.setCellValueFactory(new PropertyValueFactory<>("roles"));
         score.setCellValueFactory(new PropertyValueFactory<>("score"));
         nb_etoile.setCellValueFactory(new PropertyValueFactory<>("nb_etoiles"));
         nom.setCellValueFactory(new PropertyValueFactory<>("nom"));
-        prenom.setCellValueFactory(new PropertyValueFactory<>("prenom")); 
-   
+        prenom.setCellValueFactory(new PropertyValueFactory<>("prenom"));
+
         tvUsers.setItems(listm);
         search_user();
 
     }
-    
-       @FXML
-    private void logout() throws IOException {  
-        PidevUser m = new PidevUser() ;
-       
-        m.changeScene("/gui/login.fxml");
-        
-    }
-    
-     @FXML
-    private void tobot()throws IOException {
-        PidevUser m = new PidevUser() ;
-         m.changeScene("/gui/ChatBot.fxml");
-        
-    }
-    
-  private void addButtonToTable() {
-        TableColumn<User, Void> BlockBtn = new TableColumn("Block");
 
-        Callback<TableColumn<User, Void>, TableCell<User, Void>> cellFactory = new Callback<TableColumn<User, Void>, TableCell<User, Void>>() {
+    @FXML
+    private void logout() throws IOException {
+        PidevUser m = new PidevUser();
+
+        m.changeScene("/gui/login.fxml");
+
+    }
+
+    @FXML
+    private void tobot() throws IOException {
+        PidevUser m = new PidevUser();
+        m.changeScene("/gui/ChatBot.fxml");
+
+    }
+
+    private void addButtonToTable() {
+        // Add "Block" button
+        TableColumn<User, Void> blockBtn = new TableColumn<>("Block");
+        blockBtn.setCellFactory(getButtonCellFactory("Block", true));
+        tvUsers.getColumns().add(blockBtn);
+
+        // Add "Unblock" button
+        TableColumn<User, Void> unblockBtn = new TableColumn<>("Unblock");
+        unblockBtn.setCellFactory(getButtonCellFactory("Unblock", false));
+        tvUsers.getColumns().add(unblockBtn);
+    }
+
+    private Callback<TableColumn<User, Void>, TableCell<User, Void>> getButtonCellFactory(String buttonText, boolean isBlockButton) {
+        return new Callback<TableColumn<User, Void>, TableCell<User, Void>>() {
             @Override
             public TableCell<User, Void> call(final TableColumn<User, Void> param) {
                 final TableCell<User, Void> cell = new TableCell<User, Void>() {
-
-                    private final Button btn = new Button("Block");
+                    private final Button btn = new Button(buttonText);
 
                     {
                         btn.setOnAction((ActionEvent event) -> {
                             TableColumn<User, String> firstColumn = (TableColumn<User, String>) getTableView().getColumns().get(0);
                             String email = firstColumn.getCellData(getIndex());
                             System.out.println("selectedData: " + email);
-                           try {
-                                ServiceUser.getInstance().BlockUser(email);
+
+                            try {
+                                if (isBlockButton) {
+                                    ServiceUser.getInstance().BlockUser(email);
+                                } else {
+                                    ServiceUser.getInstance().unBlockUser(email);
+                                }
                             } catch (SQLException ex) {
                                 Logger.getLogger(LoggedInController.class.getName()).log(Level.SEVERE, null, ex);
                             }
@@ -179,13 +192,8 @@ public class LoggedInController implements Initializable {
                 return cell;
             }
         };
-
-        BlockBtn.setCellFactory(cellFactory);
-
-        tvUsers.getColumns().add(BlockBtn);
-
     }
-  
+
     @FXML
     public void getSelected(MouseEvent event) throws SQLException {
         index = tvUsers.getSelectionModel().getSelectedIndex();
@@ -201,7 +209,6 @@ public class LoggedInController implements Initializable {
         scores.setText(score.getCellData(index).toString());
         num_telephones.setText(num_telephone.getCellData(index).toString());
         nb_etoiles.setText(nb_etoile.getCellData(index).toString());
-
 
     }
 
@@ -220,7 +227,7 @@ public class LoggedInController implements Initializable {
             User user;
             ResultSet rs = smt.executeQuery();
             while (rs.next()) {
-                user = new User(rs.getInt("id"), rs.getString("email"),  rs.getString("num_telephone"),  rs.getString("roles"),  rs.getInt("score"),  rs.getInt("nb_etoile"),  rs.getString("nom"),  rs.getString("prenom"));
+                user = new User(rs.getInt("id"), rs.getString("email"), rs.getString("num_telephone"), rs.getString("roles"), rs.getInt("score"), rs.getInt("nb_etoile"), rs.getString("nom"), rs.getString("prenom"));
                 UserList.add(user);
             }
             System.out.println(UserList);
@@ -236,7 +243,7 @@ public class LoggedInController implements Initializable {
     public void showRec() {
 
         ObservableList<User> list = getUserList();
-        id.setCellValueFactory(new PropertyValueFactory<>("id"));
+   id.setCellValueFactory(new PropertyValueFactory<>("id"));
         email.setCellValueFactory(new PropertyValueFactory<>("email"));
         nom.setCellValueFactory(new PropertyValueFactory<>("nom"));
         prenom.setCellValueFactory(new PropertyValueFactory<>("prenom"));
@@ -260,11 +267,10 @@ public class LoggedInController implements Initializable {
         score.setCellValueFactory(new PropertyValueFactory<>("score"));
         nb_etoile.setCellValueFactory(new PropertyValueFactory<>("nb_etoile"));
         num_telephone.setCellValueFactory(new PropertyValueFactory<>("num_telephone"));
-        
+
         tvUsers.setItems(list);
 
     }
-
 
     public void Edit() {
 
@@ -307,7 +313,7 @@ public class LoggedInController implements Initializable {
 
     @FXML
     void search_user() {
-         id.setCellValueFactory(new PropertyValueFactory<>("id"));
+        id.setCellValueFactory(new PropertyValueFactory<>("id"));
         email.setCellValueFactory(new PropertyValueFactory<>("email"));
         nom.setCellValueFactory(new PropertyValueFactory<>("nom"));
         prenom.setCellValueFactory(new PropertyValueFactory<>("prenom"));
@@ -315,7 +321,7 @@ public class LoggedInController implements Initializable {
         score.setCellValueFactory(new PropertyValueFactory<>("score"));
         nb_etoile.setCellValueFactory(new PropertyValueFactory<>("nb_etoile"));
         num_telephone.setCellValueFactory(new PropertyValueFactory<>("num_telephone"));
-        
+
         cnx = dbconnection.getInstance().getConnection();
 
         ObservableList<User> dataList = getUserList();
@@ -346,7 +352,5 @@ public class LoggedInController implements Initializable {
         tvUsers.setItems(sortedData);
 
     }
-
-    
 
 }

@@ -28,22 +28,22 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
          </rowConstraints>
          <children>
-           <Label style="-fx-font-size: 16pt; -fx-text-fill: white; -fx-padding: 5px;" text="Nom">
+           <Label style="-fx-font-size: 16pt; -fx-padding: 5px;" text="Nom">
                <font>
                   <Font name="System Bold Italic" size="12.0" />
                </font></Label>
-            <Label style="-fx-font-size: 16pt; -fx-text-fill: white; -fx-padding: 5px;" text="Prenom" GridPane.rowIndex="1" />
-            <Label style="-fx-font-size: 16pt; -fx-text-fill: white; -fx-padding: 5px;" text="Email" GridPane.rowIndex="2" />
+            <Label style="-fx-font-size: 16pt; -fx-padding: 5px;" text="Prenom" GridPane.rowIndex="1" />
+            <Label style="-fx-font-size: 16pt; -fx-padding: 5px;" text="Email" GridPane.rowIndex="2" />
             <TextField fx:id="nom" GridPane.columnIndex="1" />
             <TextField fx:id="prenom" GridPane.columnIndex="1" GridPane.rowIndex="1" />
             <TextField fx:id="email" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-            <Label style="-fx-font-size: 16pt; -fx-text-fill: white; -fx-padding: 5px;" text="Type" GridPane.rowIndex="3" />
-            <Label prefHeight="41.0" prefWidth="232.0" style="-fx-font-size: 16pt; -fx-text-fill: white; -fx-padding: 5px;" text="Numero de telephone" GridPane.rowIndex="4" />
+            <Label style="-fx-font-size: 16pt; -fx-padding: 5px;" text="Type" GridPane.rowIndex="3" />
+            <Label prefHeight="41.0" prefWidth="232.0" style="-fx-font-size: 16pt; -fx-padding: 5px;" text="Numero de telephone" GridPane.rowIndex="4" />
             <TextField fx:id="type" GridPane.columnIndex="1" GridPane.rowIndex="3" />
             <TextField fx:id="num_telephone" GridPane.columnIndex="1" GridPane.rowIndex="4" />
          </children>
       </GridPane>
-     <Button layoutX="24.0" layoutY="347.0" mnemonicParsing="false" onAction="#editUser" prefHeight="25.0" prefWidth="128.0" style="-fx-background-color: #00BFFF; -fx-text-fill: white;" text="Mettre a jour" />
+     <Button layoutX="24.0" layoutY="360.0" mnemonicParsing="false" onAction="#editUser" prefHeight="25.0" prefWidth="128.0" style="-fx-background-color: #00BFFF; -fx-text-fill: white;" text="Mettre a jour" />
 <Button layoutX="211.0" layoutY="249.0" mnemonicParsing="false" onAction="#addImage" prefHeight="25.0" prefWidth="177.0" style="-fx-background-color: #00BFFF; -fx-text-fill: white;" text="Changer l'image" />
 <Button layoutX="503.0" layoutY="360.0" mnemonicParsing="false" onAction="#back" prefHeight="26.0" prefWidth="83.0" style="-fx-background-color: #00BFFF; -fx-text-fill: white;" text="Back" />
    </children>

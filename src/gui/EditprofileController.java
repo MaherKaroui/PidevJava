@@ -186,22 +186,23 @@ String imagePath="";
          }
      }
        
-       private boolean ValidateNumTel(TextField t){
-         Pattern p = Pattern.compile("^(?:(?:\\\\+|00)33|0)\\\\s*[1-9](?:[\\\\s.-]*\\\\d{2}){4}$");
-         Matcher m = p.matcher(t.getText());
-         if (m.find() && m.group().equals(t.getText())){
-             return true;
-             
-         }else{
-             Alert alert = new Alert(Alert.AlertType.WARNING);
-             alert.setTitle("Erreur");
-             alert.setHeaderText(null);
-             alert.setContentText(t.getText()+" : Numero non valide , format standard :/n/r"
-                     + "+216 11 11 11 11");
-             alert.showAndWait();
-             
-             return false;
-         }
-     }
+      private boolean ValidateNumTel(TextField t) {
+        Pattern p = Pattern.compile("^\\d{8}$");
+
+        Matcher m = p.matcher(t.getText());
+        if (m.find() && m.group().equals(t.getText())) {
+            return true;
+
+        } else {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Erreur");
+            alert.setHeaderText(null);
+            alert.setContentText(t.getText() + " : Numero non valide , format standard :/n/r"
+                    + "seu1ement 8 chiffres ");
+            alert.showAndWait();
+
+            return false;
+        }
+    }
     
 }

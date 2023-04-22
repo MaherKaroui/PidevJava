@@ -9,15 +9,15 @@
 
    <children>
 
-      <Button fx:id="button_logout" layoutX="703.0" layoutY="25.0" mnemonicParsing="false" onAction="#logout" prefHeight="32.0" prefWidth="190.0" style="-fx-background-color: #00BFFF; -fx-text-fill: white;" text="Logout" />
+      <Button fx:id="button_logout" layoutX="359.0" layoutY="176.0" mnemonicParsing="false" onAction="#logout" prefHeight="36.0" prefWidth="190.0" style="-fx-background-color: #00BFFF; -fx-text-fill: white;" text="Logout" />
 
-      <Button layoutX="703.0" layoutY="64.0" mnemonicParsing="false" onAction="#toupdatescene" prefHeight="38.0" prefWidth="190.0" style="-fx-background-color: #00BFFF; -fx-text-fill: white;" text="Mettre à jour votre profil" />
+      <Button layoutX="359.0" layoutY="242.0" mnemonicParsing="false" onAction="#toupdatescene" prefHeight="38.0" prefWidth="190.0" style="-fx-background-color: #00BFFF; -fx-text-fill: white;" text="Mettre à jour votre profil" />
      
-       <Label layoutX="21.0" layoutY="25.0" prefHeight="36.0" prefWidth="385.0" text="Bienvenue a Sportify!" textOverrun="CENTER_WORD_ELLIPSIS">
+       <Label layoutX="334.0" layoutY="61.0" prefHeight="36.0" prefWidth="238.0" text="Bienvenue a Sportify!" textOverrun="CENTER_WORD_ELLIPSIS">
          <font>
             <Font size="25.0" />
          </font></Label>
-      <Button layoutX="703.0" layoutY="112.0" mnemonicParsing="false" onAction="#tobot" prefHeight="38.0" prefWidth="190.0" style="-fx-background-color: #00BFFF; -fx-text-fill: white;" text="CHATBOT" />
+      <Button layoutX="358.0" layoutY="299.0" mnemonicParsing="false" onAction="#tobot" prefHeight="38.0" prefWidth="190.0" style="-fx-background-color: #00BFFF; -fx-text-fill: white;" text="CHATBOT" />
      
      
    </children>

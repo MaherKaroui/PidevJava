@@ -115,6 +115,18 @@ public class ServiceUser {
         pre.executeUpdate();
         
     }
+     public void unBlockUser(String email) throws SQLException{
+        String req = "UPDATE user SET "
+                  + "blocked = ?"        
+                    + " where email=?";
+        
+        System.out.println(req);
+        PreparedStatement pre = cn.prepareStatement(req);
+        pre.setInt(1, 0);
+        pre.setString(2, email);
+        pre.executeUpdate();
+        
+    }
       public User searchUserByEmail(String pseudo, String password) throws SQLException {
         User user = null;
       String req="SELECT (password) FROM user where (nom=? OR email=?)";
