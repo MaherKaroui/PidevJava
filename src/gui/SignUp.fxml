@@ -2,15 +2,17 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
-<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #7fbf7f;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.SignUpController">
+<AnchorPane id="AnchorPane" prefHeight="620.0" prefWidth="948.0" style="-fx-background-color: #20120F;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.SignUpController">
     <style>
         .label {
             -fx-text-fill: #333333;
@@ -35,11 +37,16 @@
         }
     </style>
     <children>
-         <AnchorPane prefHeight="455.0" prefWidth="739.0" style="-fx-background-color: #C7E6D7;">
-        <GridPane layoutX="14.0" layoutY="32.0" prefHeight="207.0" prefWidth="389.0" AnchorPane.bottomAnchor="161.0">
+      <ImageView fitHeight="580.0" fitWidth="968.0" layoutY="40.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../ressources/hero-2.jpg" />
+         </image>
+      </ImageView>
+         <AnchorPane layoutX="484.0" layoutY="62.0" prefHeight="480.0" prefWidth="428.0" style="-fx-background-color: #ED7117;">
+        <GridPane layoutX="4.0" layoutY="75.0" prefHeight="246.0" prefWidth="321.0" AnchorPane.bottomAnchor="158.60000000000002">
             <columnConstraints>
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="279.0" minWidth="10.0" prefWidth="279.0" />
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="125.0" minWidth="10.0" prefWidth="65.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="279.0" minWidth="10.0" prefWidth="147.59996337890624" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="161.20003662109372" minWidth="10.0" prefWidth="161.20003662109372" />
             </columnConstraints>
             <rowConstraints>
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -51,28 +58,26 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             </rowConstraints>
             <children>
-                <Label styleClass="label" text="Nom" />
-                <Label styleClass="label" text="Prenom" GridPane.rowIndex="1" />
-                <Label styleClass="label" text="Email" GridPane.rowIndex="2" />
-                <Label styleClass="label" text="Mot de Passe" GridPane.rowIndex="3" />
-                <Label styleClass="label" text="Confirmer Mot de passe" GridPane.rowIndex="4" />
-                <TextField fx:id="nom" GridPane.columnIndex="1" />
-            <TextField fx:id="prenom" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <TextField fx:id="email" prefHeight="26.0" prefWidth="122.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-            <TextField fx:id="mot_de_passe" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-            <TextField fx:id="confirmerMotDePasse" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-            <Label text="Type" GridPane.rowIndex="5" />
-            <Label prefHeight="18.0" prefWidth="159.0" text="Numero de telephone" GridPane.rowIndex="6" />
-            <TextField fx:id="num_telephone" GridPane.columnIndex="1" GridPane.rowIndex="6" />
-               <ComboBox fx:id="typeabn" prefHeight="26.0" prefWidth="119.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                <TextField fx:id="nom" opacity="0.5" promptText="Nom" GridPane.columnIndex="1" />
+            <TextField fx:id="prenom" opacity="0.5" promptText="Prenom" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <TextField fx:id="email" opacity="0.5" prefHeight="26.0" prefWidth="122.0" promptText="Email" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <TextField fx:id="mot_de_passe" opacity="0.5" promptText="Password" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            <TextField fx:id="confirmerMotDePasse" opacity="0.5" promptText="Confirmer Password" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+            <TextField fx:id="num_telephone" opacity="0.5" promptText="Num de telephone" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+               <ComboBox fx:id="typeabn" opacity="0.5" prefHeight="26.0" prefWidth="159.0" promptText="Type abonnement " GridPane.columnIndex="1" GridPane.rowIndex="5" />
          </children>
       </GridPane>
-      <ImageView fx:id="pic" fitHeight="150.0" fitWidth="184.0" layoutX="403.0" layoutY="32.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="pic" fitHeight="74.0" fitWidth="95.0" layoutX="213.0" layoutY="331.0" pickOnBounds="true" preserveRatio="true" />
      
-      <Button fx:id="imageB" layoutX="445.0" layoutY="157.0" mnemonicParsing="false" onAction="#addImage" style="-fx-background-color: #7fbf7f; -fx-text-fill: white;" text="image" />
-      <Button fx:id="SignUp" layoutX="14.0" layoutY="323.0" mnemonicParsing="false" onAction="#addUser" prefHeight="32.0" prefWidth="127.0" style="-fx-background-color: #7fbf7f; -fx-text-fill: white;" text="Signup" />
-      <Button layoutX="445.0" layoutY="323.0" mnemonicParsing="false" onAction="#login" prefHeight="32.0" prefWidth="127.0" style="-fx-background-color: #7fbf7f; -fx-text-fill: white;" text="Login" />
+      <Button fx:id="imageB" layoutX="129.0" layoutY="355.0" mnemonicParsing="false" onAction="#addImage" style="-fx-background-color: #8D4004; -fx-text-fill: white;" text="image" />
+      <Button fx:id="SignUp" layoutX="165.0" layoutY="425.0" mnemonicParsing="false" onAction="#addUser" prefHeight="32.0" prefWidth="162.0" style="-fx-background-color: #8D4004; -fx-text-fill: white;" text="Signup" />
 
       </AnchorPane>
+   <Button layoutX="82.0" layoutY="382.0" mnemonicParsing="false" onAction="#login" prefHeight="32.0" prefWidth="127.0" style="-fx-background-color: #8D4004; -fx-text-fill: white;" text="Login" />
+      <Text fill="#f2f1f1" layoutX="29.0" layoutY="352.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Have an account ?" wrappingWidth="258.13670349121094">
+         <font>
+            <Font size="30.0" />
+         </font>
+      </Text>
    </children>
 </AnchorPane>

@@ -6,16 +6,16 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane id="AnchorPane" prefHeight="522.0" prefWidth="908.0" style="-fx-background-color: #D1F2EB;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.LoggedInController">
+<AnchorPane id="AnchorPane" prefHeight="522.0" prefWidth="908.0" style="-fx-background-color: #20120F;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.LoggedInController">
 
    <children>
 
-      <TextField fx:id="Recherche_User" layoutX="210.0" layoutY="40.0" prefHeight="34.0" prefWidth="641.0" promptText="Search" />
-    <Button fx:id="button_logout" layoutX="959.0" layoutY="44.0" mnemonicParsing="false" onAction="#logout" prefHeight="26.0" prefWidth="134.0" text="logout" />
-      <TableView fx:id="tvUsers" layoutX="210.0" layoutY="91.0" onMouseClicked="#getSelected" prefHeight="482.0" prefWidth="885.0" style="-fx-background-color: white;">
+      <TextField fx:id="Recherche_User" layoutX="210.0" layoutY="40.0" opacity="0.9" prefHeight="34.0" prefWidth="641.0" promptText="Search" />
+    <Button fx:id="button_logout" layoutX="959.0" layoutY="44.0" mnemonicParsing="false" onAction="#logout" prefHeight="26.0" prefWidth="134.0" style="-fx-background-color: #8D4004;" text="logout" />
+      <TableView fx:id="tvUsers" layoutX="179.0" layoutY="91.0" onMouseClicked="#getSelected" prefHeight="482.0" prefWidth="912.0" style="-fx-background-color: #ffb74d;">
          <columns>
             <TableColumn fx:id="email" prefWidth="156.7999725341797" text="Email" />
-            <TableColumn fx:id="id" prefWidth="68.79998779296875" text="ID" /> 
+            <TableColumn fx:id="id" prefWidth="68.79998779296875" text="ID" visible="false" /> 
             <TableColumn fx:id="nom" minWidth="0.0" prefWidth="76.0" text="Name" />
             <TableColumn fx:id="num_telephone" prefWidth="140.800048828125" text="Num_telephone" />
             <TableColumn fx:id="prenom" prefWidth="75.199951171875" text="Prenom" />
@@ -28,18 +28,18 @@
           
          </columns>
       </TableView>
-      <Button fx:id="refresh" layoutX="58.0" layoutY="45.0" mnemonicParsing="false" onAction="#showRec" text="refresh" />
-      <Button fx:id="modifier" layoutX="14.0" layoutY="385.0" mnemonicParsing="false" onAction="#Edit" prefHeight="26.0" prefWidth="90.0" text="modifier" />
-      <Button fx:id="supprimer" layoutX="14.0" layoutY="425.0" mnemonicParsing="false" onAction="#Delete" prefHeight="26.0" prefWidth="90.0" text="supprimer" />
+      <Button fx:id="refresh" layoutX="58.0" layoutY="45.0" mnemonicParsing="false" onAction="#showRec" style="-fx-background-color: #8D4004;" text="refresh" />
+      <Button fx:id="modifier" layoutX="14.0" layoutY="385.0" mnemonicParsing="false" onAction="#Edit" prefHeight="26.0" prefWidth="90.0" style="-fx-background-color: #8D4004;" text="modifier" />
+      <Button fx:id="supprimer" layoutX="14.0" layoutY="425.0" mnemonicParsing="false" onAction="#Delete" prefHeight="26.0" prefWidth="90.0" style="-fx-background-color: #8D4004;" text="supprimer" />
       
-      <TextField fx:id="ids" editable="false" layoutX="16.0" layoutY="92.0" promptText="ID" />
-      <TextField fx:id="emails" layoutX="16.0" layoutY="131.0" promptText="Email" />
-      <TextField fx:id="noms" layoutX="16.0" layoutY="205.0" promptText="Nom" />
-      <TextField fx:id="prenoms" layoutX="16.0" layoutY="274.0" promptText="Prenom" />
-      <TextField fx:id="num_telephones" layoutX="16.0" layoutY="169.0" promptText="Num_telephone" />
-      <TextField fx:id="roless" layoutX="16.0" layoutY="240.0" promptText="Role" />
-      <TextField fx:id="nb_etoiles" layoutX="16.0" layoutY="307.0" promptText="Nombre_etoile" />
-      <TextField fx:id="scores" layoutX="16.0" layoutY="341.0" promptText="Score" />
+      <TextField fx:id="ids" editable="false" layoutX="16.0" layoutY="92.0" opacity="0.7" promptText="ID" visible="false" />
+      <TextField fx:id="emails" layoutX="16.0" layoutY="131.0" opacity="0.7" promptText="Email" />
+      <TextField fx:id="noms" layoutX="16.0" layoutY="205.0" opacity="0.7" promptText="Nom" />
+      <TextField fx:id="prenoms" layoutX="16.0" layoutY="274.0" opacity="0.7" promptText="Prenom" />
+      <TextField fx:id="num_telephones" layoutX="16.0" layoutY="169.0" opacity="0.7" promptText="Num_telephone" />
+      <TextField fx:id="roless" layoutX="16.0" layoutY="240.0" opacity="0.7" promptText="Role" />
+      <TextField fx:id="nb_etoiles" layoutX="16.0" layoutY="307.0" opacity="0.7" promptText="Nombre_etoile" />
+      <TextField fx:id="scores" layoutX="16.0" layoutY="341.0" opacity="0.7" promptText="Score" />
       
    </children>
 </AnchorPane>

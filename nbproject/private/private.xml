@@ -3,21 +3,12 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/malek/Desktop/PidevUser/src/gui/LoggedInClient.fxml</file>
-            <file>file:/C:/Users/malek/Desktop/PidevUser/src/gui/UserBlockedController.java</file>
-            <file>file:/C:/Users/malek/Desktop/PidevUser/src/gui/LoggedInController.java</file>
-            <file>file:/C:/Users/malek/Desktop/PidevUser/src/Services/ServiceUser.java</file>
-            <file>file:/C:/Users/malek/Desktop/PidevUser/src/util/dbconnection.java</file>
-            <file>file:/C:/Users/malek/Desktop/PidevUser/src/gui/LoggedInClientController.java</file>
-            <file>file:/C:/Users/malek/Desktop/PidevUser/src/gui/SignUpController.java</file>
-            <file>file:/C:/Users/malek/Desktop/PidevUser/src/gui/SignUp.fxml</file>
-            <file>file:/C:/Users/malek/Desktop/PidevUser/src/gui/ChatBotController.java</file>
-            <file>file:/C:/Users/malek/Desktop/PidevUser/src/pidevuser/PidevUser.java</file>
-            <file>file:/C:/Users/malek/Desktop/PidevUser/src/gui/loginController.java</file>
-            <file>file:/C:/Users/malek/Desktop/PidevUser/src/entites/User.java</file>
-            <file>file:/C:/Users/malek/Desktop/PidevUser/src/gui/login.fxml</file>
-            <file>file:/C:/Users/malek/Desktop/PidevUser/src/gui/LoggedIn.fxml</file>
-            <file>file:/C:/Users/malek/Desktop/PidevUser/src/gui/EditprofileController.java</file>
+            <file>file:/C:/Users/malek/Desktop/Gestionuserjava/src/gui/loginController.java</file>
+            <file>file:/C:/Users/malek/Desktop/Gestionuserjava/src/pidevuser/PidevUser.java</file>
+            <file>file:/C:/Users/malek/Desktop/Gestionuserjava/src/gui/ChatBotController.java</file>
+            <file>file:/C:/Users/malek/Desktop/Gestionuserjava/src/gui/login.fxml</file>
+            <file>file:/C:/Users/malek/Desktop/Gestionuserjava/src/gui/ChatBot.fxml</file>
+            <file>file:/C:/Users/malek/Desktop/Gestionuserjava/src/gui/SignUp.fxml</file>
         </group>
     </open-files>
 </project-private>

@@ -29,7 +29,7 @@ public class PidevUser extends Application {
        // primaryStage.setResizable(false);
         Parent root = FXMLLoader.load(getClass().getResource("/gui/login.fxml"));
         stage.setTitle("Sportify");
-        stage.setScene(new Scene(root, 600*2, 400*2));
+        stage.setScene(new Scene(root, 942, 620));
         stage.show();
     }
  public void changeScene(String fxml) throws IOException {
