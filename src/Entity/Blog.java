@@ -11,6 +11,9 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.image.Image;
@@ -30,6 +33,44 @@ public class Blog {
     private String image;
     private Date date;
     private int is_best;
+    private int nbLike;
+
+    private String imagePath;
+
+  
+    
+
+    public Blog(int id, String titre, String auteur, String contenu, String urls, int best, LocalDate date, int categoryId) {
+        this.id_categ_a_id = categoryId;
+        this.titre_article = titre;
+        this.contenu_article = contenu;
+        this.auteur_article = auteur;
+        this.image = urls;
+        this.is_best = best;
+       
+    }
+
+    public void setNbLike(int nbLike) {
+        this.nbLike = nbLike;
+    }
+
+    public int getNbLike() {
+        return nbLike;
+    }
+
+    public Blog(int ID, int id_categ_a_id, String titre_article, String contenu_article, String auteur_article, String image, Date date, int is_best, int nbLike, List<comment> comments, List<categorieA> categories) {
+        this.ID = ID;
+        this.id_categ_a_id = id_categ_a_id;
+        this.titre_article = titre_article;
+        this.contenu_article = contenu_article;
+        this.auteur_article = auteur_article;
+        this.image = image;
+        this.date = date;
+        this.is_best = is_best;
+        this.nbLike = nbLike;
+        this.comments = comments;
+        this.categories = categories;
+    }
     private List<comment> comments; // Ajoutez cet attribut pour stocker les catégories associées au blog
 
     private List<categorieA> categories; // Ajoutez cet attribut pour stocker les catégories associées au blog
@@ -213,13 +254,13 @@ int id_categorie = categorie.getId(); // Utiliser la méthode getId() pour obten
         this.auteur_article = auteur_article;
     }
 
-    public String getImage() {
+   /* public String getImage() {
         return image;
     }
 
     public void setImage(String image) {
         this.image = image;
-    }
+    }*/
 
     public Date getDate() {
         return date;
@@ -310,18 +351,15 @@ int id_categorie = categorie.getId(); // Utiliser la méthode getId() pour obten
         char premiereLettre = nom_article.charAt(0);
         return Character.isUpperCase(premiereLettre);
     }
-    // Méthode pour ajouter une catégorie à la liste de catégories
 
     public void addCategorie(categorieA categorie) {
         this.categories.add(categorie);
     }
 
-    // Méthode pour définir la liste complète des catégories associées au blog
     public void setCategories(List<categorieA> categories) {
         this.categories = categories;
     }
 
-    // Méthode pour récupérer la liste des catégories associées au blog
     public List<categorieA> getCategories() {
         return this.categories;
     }
@@ -332,7 +370,6 @@ int id_categorie = categorie.getId(); // Utiliser la méthode getId() pour obten
 
     public List<String> getUrls_images() {
   List<String> urls = new ArrayList<>();
-    // add the URLs of images to the list
     urls.add("file:/C:/Users/saada/OneDrive/Bureau/test_desck/175.jpg");
 
   return urls;
@@ -344,6 +381,15 @@ int id_categorie = categorie.getId(); // Utiliser la méthode getId() pour obten
             this.comments = new ArrayList<>();
         }
         this.comments.add(comment);
+    }
+
+
+public String getImage() {
+        return this.imagePath;
+    }
+
+    public void setImage(String imagePath) {
+        this.imagePath = imagePath;
     }
 }
 

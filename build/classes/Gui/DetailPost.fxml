@@ -65,18 +65,7 @@
                     <Font name="Arial Bold Italic" size="21.0" />
                 </font>
             </Label>
-            <Label layoutX="619.0" layoutY="524.0" text="Nombre de Like pour ce Post" textFill="#ca71d0">
-                <font>
-                    <Font name="System Bold Italic" size="16.0" />
-                </font>
-            </Label>
-            <TextField fx:id="tflikes" layoutX="850.0" layoutY="521.0" prefHeight="31.0" prefWidth="104.0" />
-      <Button layoutX="704.0" layoutY="692.0" mnemonicParsing="false" onAction="#PDF" prefHeight="48.0" prefWidth="78.0" />
-      <ImageView fitHeight="38.0" fitWidth="53.0" layoutX="719.0" layoutY="697.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../superMarket/image/print.png" />
-         </image>
-      </ImageView>
+      <ImageView fx:id="image_article" fitHeight="290.0" fitWidth="468.0" layoutX="135.0" layoutY="457.0" pickOnBounds="true" preserveRatio="true" />
         
 
     </children>

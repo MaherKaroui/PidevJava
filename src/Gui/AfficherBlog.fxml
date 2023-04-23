@@ -76,17 +76,21 @@
                   <Insets left="50.0" right="50.0" />
                </VBox.margin>
                <children>
+                      <Button mnemonicParsing="false" onAction="#AjouterBlog" prefHeight="29.0" prefWidth="175.0" styleClass="add-btn" text="Ajouter Post" textOverrun="CLIP">
+                          <font>
+                              <Font name="System Bold" size="13.0" />
+                          </font>
+                     <stylesheets>
+                        <URL value="@Stylee1.css" />
+                        <URL value="@design.css" />
+                     </stylesheets>
+                      </Button>
                   <HBox prefHeight="52.0" prefWidth="269.0">
                      <children>
-                            <Button mnemonicParsing="false" onAction="#AjouterBlog" prefHeight="29.0" prefWidth="168.0" styleClass="add-btn" text="Ajouter Post" textOverrun="CLIP" translateX="70.0" translateY="20.0">
-                                <font>
-                                    <Font name="System Bold" size="13.0" />
-                                </font>
-                           <stylesheets>
-                              <URL value="@Stylee1.css" />
-                              <URL value="@design.css" />
-                           </stylesheets>
-                            </Button>
+                            <Button mnemonicParsing="false" onAction="#AjouterC" prefHeight="31.0" prefWidth="175.0" styleClass="add-btn" stylesheets="@design.css" text="Ajouter Categorie" translateX="70.0" translateY="15.0">
+                           <font>
+                              <Font name="System Bold" size="15.0" />
+                           </font></Button>
                      </children>
                   </HBox>
                   <HBox alignment="CENTER" prefHeight="33.0" prefWidth="335.0">
@@ -94,25 +98,24 @@
                         <Insets bottom="20.0" top="20.0" />
                      </VBox.margin>
                      <children>
-                            <Button mnemonicParsing="false" onAction="#AjouterC" prefHeight="31.0" prefWidth="166.0" styleClass="add-btn" stylesheets="@design.css" text="Ajouter Categorie">
-                           <font>
-                              <Font name="System Bold" size="15.0" />
-                           </font></Button>
+                        <HBox alignment="CENTER" prefHeight="53.0" prefWidth="335.0">
+                           <children>
+                              <Label fx:id="lbcontenu" />
+                              <Button mnemonicParsing="false" onAction="#listeCom" prefHeight="31.0" prefWidth="180.0" stylesheets="@design.css" text="liste des commentaires" textFill="#ab6060">
+                                 <styleClass>
+                                    <String fx:value="button3" />
+                                    <String fx:value="button2" />
+                                    <String fx:value="add-btn" />
+                                 </styleClass>
+                              </Button>
+                           </children>
+                        </HBox>
                      </children>
                   </HBox>
-                  <HBox alignment="CENTER" prefHeight="53.0" prefWidth="335.0">
+                  <HBox prefHeight="50.0" prefWidth="235.0" stylesheets="@style.css">
                      <children>
-                        <Label fx:id="lbcontenu" />
-                        <Button mnemonicParsing="false" onAction="#listeCom" stylesheets="@design.css" text="liste des commentaires" textFill="#ab6060">
-                           <styleClass>
-                              <String fx:value="button3" />
-                              <String fx:value="button2" />
-                              <String fx:value="add-btn" />
-                           </styleClass>
-                        </Button>
-                     </children>
-                  </HBox>
-                  <HBox prefHeight="50.0" prefWidth="235.0" stylesheets="@style.css" />
+                        <Button fx:id="likebtn" mnemonicParsing="false" onAction="#btnlike" prefHeight="31.0" prefWidth="180.0" styleClass="add-btn" stylesheets="@style.css" text="liste des Likes" textFill="#e86e6e" translateX="65.0" translateY="10.0" />
+                     </children></HBox>
                   <HBox alignment="CENTER" prefHeight="33.0" prefWidth="335.0">
                      <children>
                         <Separator prefHeight="0.0" prefWidth="118.0" />
@@ -142,7 +145,14 @@
                   <Button mnemonicParsing="false" onAction="#populatedArticle" prefHeight="31.0" prefWidth="180.0" styleClass="add-btn" stylesheets="@style.css" text="Articles Populaires" translateY="20.0" />
                </children>
             </VBox>
-            <Pane prefHeight="124.0" prefWidth="410.0" stylesheets="@style.css" VBox.vgrow="ALWAYS" />
+            <Pane prefHeight="124.0" prefWidth="410.0" stylesheets="@style.css" VBox.vgrow="ALWAYS">
+               <children>
+                  <ImageView fitHeight="82.0" fitWidth="82.0" layoutX="328.0" onMouseClicked="#affichermails" pickOnBounds="true" preserveRatio="true" translateY="30.0">
+                     <image>
+                        <Image url="@../superMarket/image/images%20(1).png" />
+                     </image>
+                  </ImageView>
+               </children></Pane>
          </children>
       </VBox>
     </children>

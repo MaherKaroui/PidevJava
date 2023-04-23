@@ -31,7 +31,7 @@ public class Test_desck {
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) {
+    public static void main(String[] args) throws SQLException {
         // TODO code application logic here
         Date date = Date.valueOf("2022-10-10");
         LocalDateTime localDateTime = LocalDateTime.now();
@@ -47,10 +47,12 @@ public class Test_desck {
         categorieA cat = new categorieA(4, "Actualité");
 
         {
-            ;
+            
             BlogService ps = new BlogService();
             CommentService p = new CommentService();
             CategorieService pp = new CategorieService();
+           // ps.getLikesCount(3);
+           // ps.updateLikesCount();
             //ps.ModifierBlog2(v);
             //p.Recuperer();
             //p.ModifierCo(chaima);
@@ -62,8 +64,8 @@ public class Test_desck {
             //System.out.println(ps.recherche("Yoga"));
             //ps.ajouterlike(3,"ayedi.malek@esprit.tn");
             //ps.afficherAuteursPlusActifs();
-            ps.getLikeStats(cnx);
-            ps.getCommentStats(cnx);
+            //ps.getLikeStats(cnx);
+            //ps.getCommentStats(cnx);
 
             // System.out.println(  p.detail(1));
             //System.out.println( ps.getCommentsWithArticleTitles());
@@ -99,6 +101,8 @@ public class Test_desck {
             //System.out.println(ps.compterNbCommentaires());
             //System.out.println( ps.getArticlesPopulairesParCommentaires(1));
             // System.out.println(ps.getArticlesPopulairesParCommentaires(3));
+            System.out.println( ps.getAllLikesForPost());
         }
+        
     }
 }

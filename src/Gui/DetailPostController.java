@@ -6,10 +6,9 @@
 package Gui;
 
 import Entity.Blog;
-import Entity.comment;
-import Service.BlogService;
-import Service.CommentService;
-import java.io.FileOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -25,9 +24,9 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
-import javax.swing.text.Document;
 
 /**
  * FXML Controller class
@@ -55,41 +54,52 @@ public class DetailPostController implements Initializable {
     @FXML
     private TextField tfbest;
     @FXML
-    private TextField tflikes;
+    private ImageView image_article;
+    private Blog blog;
 
     /**
      * Initializes the controller class.
      */
-    @Override
-    public void initialize(URL url, ResourceBundle rb) {
-        // TODO
-    }    
-public DetailPostController() {
-    // Initialize the controller
-}
- public  DetailPostController(Blog blog) {
- 
-
-        
-       
- }
- 
-public void updateBlogDetails(Blog blog) {
-    tftitre.setText("Titre Article : " + blog.getTitre_article());
-    tfcontenu.setText("Contenu: " + blog.getContenu_article());
-   tfdate.setText("Date : " + String.valueOf(blog.getDate()));
-   tfauteur.setText("Auteur: " + blog.getAuteur_article());
-if (blog.getIs_best() == 1) {
-        tfbest.setText("Sélection : isBest");
-    } else {
-        tfbest.setText("Sélection : notBest");
+    public DetailPostController() {
+        // Initialize the controller
     }
 
+    public DetailPostController(Blog blog) {
+        this.blog = blog;
 
+    }
 
+    @Override
+    public void initialize(URL url, ResourceBundle rb) {
+        //ToDo
 
-}
-  
+    }
+
+    public void updateBlogDetails(Blog blog) throws FileNotFoundException {
+        tftitre.setText("Titre Article : " + blog.getTitre_article());
+        tfcontenu.setText("Contenu: " + blog.getContenu_article());
+        tfdate.setText("Date : " + String.valueOf(blog.getDate()));
+        tfauteur.setText("Auteur: " + blog.getAuteur_article());
+        if (blog.getIs_best() == 1) {
+            tfbest.setText("Sélection : isBest");
+        } else {
+            tfbest.setText("Sélection : notBest");
+        }
+
+        /*String imagePath = blog.getImage();
+    Image image = new Image(new FileInputStream(imagePath));
+    image_article.setImage(image);
+    
+    // appel de la méthode displayImage
+    displayImage(imagePath, image_article);*/
+    }
+
+    public void displayImage(String imagePath, ImageView imageView) {
+        File file = new File(imagePath);
+        Image image = new Image(file.toURI().toString());
+        imageView.setImage(image);
+    }
+
     @FXML
     private void modifier(ActionEvent event) {
     }
@@ -99,7 +109,7 @@ if (blog.getIs_best() == 1) {
     }
 
     private void commenter(ActionEvent event) {
-          try {
+        try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("AfficherCom.fxml"));
             Parent root = loader.load();
             Scene scene = new Scene(root);
@@ -109,29 +119,7 @@ if (blog.getIs_best() == 1) {
         } catch (IOException ex) {
             Logger.getLogger(AfficherBlogController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-        
-      
-        
-        
-        
-        
-        
-        
-        
-        
-        
+
     }
 
- 
-
-
-
-        
-    }
-
-   
-
-    
-    
-
+}

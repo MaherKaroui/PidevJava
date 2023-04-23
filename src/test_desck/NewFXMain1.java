@@ -5,7 +5,9 @@
  */
 package test_desck;
 
+import animatefx.animation.FadeIn;
 import java.io.IOException;
+import static java.lang.Thread.State.NEW;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -31,6 +33,8 @@ public class NewFXMain1 extends Application {
             Scene scene = new Scene(root);
             primaryStage.setScene(scene);
             primaryStage.setTitle("Blog CRUD");
+                    new FadeIn(root).play();
+
             primaryStage.show();
         } catch (IOException ex) {
             System.out.println(ex.getMessage());

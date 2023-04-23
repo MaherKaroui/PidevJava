@@ -75,7 +75,7 @@
             <TableColumn fx:id="categorie" prefWidth="92.0" text="categorie" />
             <TableColumn fx:id="date_a" minWidth="0.0" prefWidth="56.0" />
             <TableColumn fx:id="Bbest" prefWidth="155.0" text="is best" />
-            <TableColumn fx:id="commentaires" text="image" />
+            <TableColumn fx:id="image_article" text="image" />
             <TableColumn fx:id="Contenu" prefWidth="260.0" />
          </columns>
          <columnResizePolicy>

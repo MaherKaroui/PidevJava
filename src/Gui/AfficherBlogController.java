@@ -29,6 +29,12 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import java.awt.Desktop;
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
+import javafx.application.Platform;
+import javafx.scene.control.Button;
 
 /**
  * FXML Controller class
@@ -44,6 +50,8 @@ public class AfficherBlogController implements Initializable {
     private VBox chosenFruitCard;
     @FXML
     private Label lbcontenu;
+    @FXML
+    private Button likebtn;
 
     /**
      * Initializes the controller class.
@@ -59,19 +67,20 @@ public class AfficherBlogController implements Initializable {
         ObservableList<Blog> items = FXCollections.observableArrayList(blog);
         listeB.setItems(items);
         listeB.setItems(items);
-        // 2. Créez une ArrayList de maps pour stocker les attributs de chaque hôtel
-        // Définition de l'écouteur d'événement de clic sur la cellule
+
         listeB.getSelectionModel().selectedIndexProperty().addListener((observable, oldValue, newValue) -> {
-            // Récupérer l'index de l'élément sélectionné
+
             int selectedIndex = newValue.intValue();
-            // Récupérer l'objet Hotel correspondant à cet index
+
             Blog selectedPost = blog.get(selectedIndex);
-            // Récupérer l'ID de l'hôtel
+
             int postId = selectedPost.getID();
             prefs.putInt("selecteBlogID", postId);
             System.out.println(postId);
 
         });
+        Notification.showNotification("New Notification", "vous avez un nouveau commentaire pour l'approuver!");
+//Notification.showNotificationImage();
 
     }
 
@@ -124,7 +133,7 @@ public class AfficherBlogController implements Initializable {
         }
     }
 
-       @FXML
+    @FXML
     private void listeCom(ActionEvent event) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("AfficherCom.fxml"));
@@ -135,7 +144,8 @@ public class AfficherBlogController implements Initializable {
             stage.showAndWait();
         } catch (IOException ex) {
             Logger.getLogger(AfficherBlogController.class.getName()).log(Level.SEVERE, null, ex);
-        }}
+        }
+    }
 
     @FXML
     private void StatLikes(ActionEvent event) {
@@ -167,21 +177,38 @@ public class AfficherBlogController implements Initializable {
 
     @FXML
     private void populatedArticle(ActionEvent event) {
-        BlogService b =new BlogService();
+        BlogService b = new BlogService();
         int limit = 10;
-        List<Blog> articles = b.getArticlesPopulairesParCommentaires(limit); // Remplacez 'limit' par la valeur souhaitée pour limiter le nombre d'articles retournés
+        List<Blog> articles = b.getArticlesPopulairesParCommentaires(limit);
 
-    // Créer une liste de chaînes pour stocker les titres des articles
-   
-    
-    
-    // Appliquer la liste de titres à la ListView
-    ObservableList<Blog> observableArticles = FXCollections.observableArrayList(articles);
-    
-    // Appliquer la liste observable à la ListView
-    listeB.setItems(observableArticles);
-    
-       
+        ObservableList<Blog> observableArticles = FXCollections.observableArrayList(articles);
+
+        listeB.setItems(observableArticles);
+
     }
-  
+
+    @FXML
+    private void affichermails(MouseEvent event) {
+
+        try {
+            Desktop.getDesktop().browse(new URI("https://mail.google.com/mail/u/0/#inbox"));
+        } catch (IOException | URISyntaxException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    private void btnlike(ActionEvent event) {
+         try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("Afficherlikes.fxml"));
+            Parent root = loader.load();
+            Scene scene = new Scene(root);
+            Stage stage = new Stage();
+            stage.setScene(scene);
+            stage.showAndWait();
+        } catch (IOException ex) {
+            Logger.getLogger(AfficherBlogController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
 }

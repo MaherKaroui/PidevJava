@@ -12,6 +12,7 @@ import Entity.comment;
 import Util.MyDB;
 import java.sql.Connection;
 import java.sql.Date;
+import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -27,6 +28,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.collections.ObservableList;
 import javafx.scene.control.Alert;
 
 /**
@@ -105,10 +107,10 @@ public class BlogService implements IServiceA<Blog> {
                 System.out.println("Article ajouté avec succès.");
             } else {
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Information");
-            alert.setHeaderText(null);
-            alert.setContentText("Un article avec ce titre existe déjà dans la base de données.");
-            alert.showAndWait();
+                alert.setTitle("Information");
+                alert.setHeaderText(null);
+                alert.setContentText("Un article avec ce titre existe déjà dans la base de données.");
+                alert.showAndWait();
                 System.out.println("Un article avec ce titre existe déjà dans la base de données.");
             }
         } catch (SQLException ex) {
@@ -145,7 +147,7 @@ public class BlogService implements IServiceA<Blog> {
         return posts;
     }
 
-    @Override
+    /*@Override
     public void SupprimerBlog(int ID) {
         try {
             Statement st = cnx.createStatement();
@@ -161,7 +163,34 @@ public class BlogService implements IServiceA<Blog> {
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
+    }*/
+   @Override
+public void SupprimerBlog(int ID) {
+    try {
+        Statement st = cnx.createStatement();
+        String checkReq = "SELECT id FROM articles WHERE id = " + ID + "";
+        ResultSet rs = st.executeQuery(checkReq);
+        if (rs.next()) { // si l'article existe
+            // Suppression des commentaires correspondants
+            String deleteComReq = "DELETE FROM commentaires WHERE id_article_id = " + ID + "";
+            st.executeUpdate(deleteComReq);
+            // Suppression des likes correspondants
+            String deleteLikeReq = "DELETE FROM `like` WHERE articles_id = " + ID + "";
+            st.executeUpdate(deleteLikeReq);
+            // Suppression de l'article
+            String deleteArtReq = "DELETE FROM articles WHERE id = " + ID + "";
+            st.executeUpdate(deleteArtReq);
+            System.out.println("L'Article avec l'id = " + ID + " a été supprimer avec succès...");
+        } else { // sinon
+            System.out.println("L'Article avec l'id = " + ID + " n'existe pas...");
+        }
+    } catch (SQLException ex) {
+        System.out.println(ex.getMessage());
     }
+}
+
+
+
 
     @Override
     public void ModifierBlog(int id, Blog v) {
@@ -188,28 +217,29 @@ public class BlogService implements IServiceA<Blog> {
         }
     }
 
-public void ModifierBlog2(Blog b) {
-    try {
-        String req = "UPDATE articles SET id_categ_a_id=?, titre_article=?, contenu_article=?, auteur_article=?, image_article=?, date_a=?, is_best=? WHERE id=?";
-        PreparedStatement ps = cnx.prepareStatement(req);
+    public void ModifierBlog2(Blog b) {
+        try {
+            String req = "UPDATE articles SET id_categ_a_id=?, titre_article=?, contenu_article=?, auteur_article=?, image_article=?, date_a=?, is_best=? WHERE id=?";
+            PreparedStatement ps = cnx.prepareStatement(req);
 
-        // Vérifier si le type_a est différent de l'ancien
-        ps.setInt(1, b.getId_categ_a_id());
-        ps.setString(2, b.getTitre_article());
-        ps.setString(3, b.getContenu_article());
-        ps.setString(4, b.getAuteur_article());
-        ps.setString(5, b.getImage());
-        ps.setDate(6, java.sql.Date.valueOf(java.time.LocalDate.now()));
-        ps.setInt(7, b.getIs_best());
-        ps.setInt(8, b.getID());
+            // Vérifier si le type_a est différent de l'ancien
+            ps.setInt(1, b.getId_categ_a_id());
+            ps.setString(2, b.getTitre_article());
+            ps.setString(3, b.getContenu_article());
+            ps.setString(4, b.getAuteur_article());
+            ps.setString(5, b.getImage());
+            ps.setDate(6, java.sql.Date.valueOf(java.time.LocalDate.now()));
+            ps.setInt(7, b.getIs_best());
+            ps.setInt(8, b.getID());
 
-        ps.executeUpdate();
-        System.out.println("Article modifié avec succès");
+            ps.executeUpdate();
+            System.out.println("Article modifié avec succès");
 
-    } catch (SQLException ex) {
-        Logger.getLogger(BlogService.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(BlogService.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
-}
+    
 
     /*public List<comment> getComments(int id) {
     List<comment> comments = new ArrayList<>();
@@ -235,33 +265,33 @@ public void ModifierBlog2(Blog b) {
     }
     return comments; 
 }*/
- public List<comment> getComments(int id) {
-    List<comment> comments = new ArrayList<>();
-    try {
-        String req = "SELECT * FROM commentaires WHERE id_article_id = " + id;
-        Statement st = cnx.createStatement();
-        ResultSet rs = st.executeQuery(req);
+    public List<comment> getComments(int id) {
+        List<comment> comments = new ArrayList<>();
+        try {
+            String req = "SELECT * FROM commentaires WHERE id_article_id = " + id;
+            Statement st = cnx.createStatement();
+            ResultSet rs = st.executeQuery(req);
 
-        while (rs.next()) {
-              comment c = new comment();
-            c.setID(rs.getInt("id"));
-            c.setNom_c(rs.getString("nom_c"));
-            c.setEmail(rs.getString("email_c"));
-              c.setID(rs.getInt("id_article"));
-            c.setContenu_c(rs.getString("contenu_c"));
-Timestamp timestamp = rs.getTimestamp("date_com");
-c.setDate_com(timestamp);
-c.setApproved(rs.getInt("approved"));
-            comments.add(c);
+            while (rs.next()) {
+                comment c = new comment();
+                c.setID(rs.getInt("id"));
+                c.setNom_c(rs.getString("nom_c"));
+                c.setEmail(rs.getString("email_c"));
+                c.setID(rs.getInt("id_article"));
+                c.setContenu_c(rs.getString("contenu_c"));
+                Timestamp timestamp = rs.getTimestamp("date_com");
+                c.setDate_com(timestamp);
+                c.setApproved(rs.getInt("approved"));
+                comments.add(c);
+            }
+            System.out.println("Comments retrieved: " + comments.size());
+
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
         }
-        System.out.println("Comments retrieved: " + comments.size());
-
-    } catch (SQLException ex) {
-        System.out.println(ex.getMessage());
+        return comments;
     }
-    return comments; 
-}
-     
+
     @Override
     public List<comment> getCommentsWithArticleTitles() {
         List<comment> comments = new ArrayList<>();
@@ -732,60 +762,155 @@ c.setApproved(rs.getInt("approved"));
         return id;
     }
 
-   public Blog getBlogById(int postId) {
-    // Get a list of all the blogs
-    List<Blog> blogs = Recuperer();
+    public Blog getBlogById(int postId) {
+        // Get a list of all the blogs
+        List<Blog> blogs = Recuperer();
 
-    // Find the blog with the specified ID
-    for (Blog blog : blogs) {
-        if (blog.getID() == postId) {
-            return blog;
+        // Find the blog with the specified ID
+        for (Blog blog : blogs) {
+            if (blog.getID() == postId) {
+                return blog;
+            }
+        }
+
+        // If no blog was found with the specified ID, return null
+        return null;
+    }
+
+    public void removeLike(int likeId) {
+        try {
+            String sql = "DELETE FROM like WHERE id = ?";
+            PreparedStatement stmt = cnx.prepareStatement(sql);
+            stmt.setInt(1, likeId);
+            int rowsDeleted = stmt.executeUpdate();
+            if (rowsDeleted > 0) {
+                System.out.println("Le like a été supprimé avec succès !");
+            } else {
+                System.out.println("Aucun like n'a été supprimé.");
+            }
+            cnx.close();
+        } catch (SQLException e) {
+            System.out.println("Erreur lors de la suppression du like : " + e.getMessage());
         }
     }
 
-    // If no blog was found with the specified ID, return null
-    return null;
-}
+    public List<PostLike> getLikesByPost(Blog post) {
+        List<PostLike> likes = new ArrayList<>();
+        try {
+            String query = "SELECT * FROM `like` WHERE articles_id = ?";
+            PreparedStatement pstmt = cnx.prepareStatement(query);
+            pstmt.setInt(1, post.getID());
+            ResultSet rs = pstmt.executeQuery();
+            while (rs.next()) {
+                PostLike like = new PostLike();
+                like.setId(rs.getInt("id"));
+                like.setUser_id(rs.getInt("user_id"));
+                like.setArticles_id(rs.getInt("articles_id"));
+                likes.add(like);
+            }
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+        return likes;
+    }
 
-public void removeLike(int likeId) {
+    public void updateLikesCount() {
+        try {
+                   String sql = "SELECT articles_id , COUNT(*) as nbLikes FROM `like` GROUP BY articles_id ";
+
+            Statement stmt = cnx.createStatement();
+            ResultSet rs = stmt.executeQuery(sql);
+            while (rs.next()) {
+                  int postId = rs.getInt("articles_id");
+            int nbLikes = rs.getInt("nbLikes");
+             String updateSql = "UPDATE articles SET nbLike = ? WHERE id = ?";
+            PreparedStatement updateStmt = cnx.prepareStatement(updateSql);
+            updateStmt.setInt(1, nbLikes);
+            updateStmt.setInt(2, postId);
+            updateStmt.executeUpdate();
+            }
+            System.out.println();
+            rs.close();
+            stmt.close();
+        } catch (SQLException ex) {
+        }
+
+    }
+    public int getLikesCount(int postId) {
+    int nbLikes = 0;
     try {
-        String sql = "DELETE FROM like WHERE id = ?";
+        // connexion à la base de données
+
+        // requête SQL pour compter le nombre de likes pour un post spécifique
+        String sql = "SELECT COUNT(*) as nbLikes FROM `like` WHERE articles_id = ?";
+
         PreparedStatement stmt = cnx.prepareStatement(sql);
-        stmt.setInt(1, likeId);
-        int rowsDeleted = stmt.executeUpdate();
-        if (rowsDeleted > 0) {
-            System.out.println("Le like a été supprimé avec succès !");
-        } else {
-            System.out.println("Aucun like n'a été supprimé.");
-        }
-        cnx.close();
-    } catch (SQLException e) {
-        System.out.println("Erreur lors de la suppression du like : " + e.getMessage());
-    }
-}
+        stmt.setInt(1, postId);
+        ResultSet rs = stmt.executeQuery();
 
-  public List<PostLike> getLikesByPost(Blog post) {
-    List<PostLike> likes = new ArrayList<>();
-    try {
-        String query = "SELECT * FROM `like` WHERE articles_id = ?";
-        PreparedStatement pstmt = cnx.prepareStatement(query);
-        pstmt.setInt(1, post.getID());
-        ResultSet rs = pstmt.executeQuery();
-        while (rs.next()) {
-            PostLike like = new PostLike();
-            like.setId(rs.getInt("id"));
-            like.setUser_id(rs.getInt("user_id"));
-            like.setArticles_id(rs.getInt("articles_id"));
-            likes.add(like);
+        if (rs.next()) {
+            nbLikes = rs.getInt("nbLikes");
+            System.out.println("nblike"+nbLikes);
         }
-    } catch (SQLException ex) {
-        System.out.println(ex.getMessage());
+
+    
+       
+    } catch (SQLException e) {
+        e.printStackTrace();
     }
+    return nbLikes;
+}
+public List<Blog> AfficherArticlesByCategoryName(String categoryName) {
+    List<Blog> blogList = new ArrayList<>();
+    try {
+        Connection cnx = MyDB.getInsatnce().getConnection();
+        String sql = "SELECT * FROM articles WHERE id_categ_a_id = (SELECT id FROM categorie_a WHERE type_a = ?)";
+        PreparedStatement statement = cnx.prepareStatement(sql);
+        statement.setString(1, categoryName);
+        ResultSet resultSet = statement.executeQuery();
+        
+        while (resultSet.next()) {
+            int id = resultSet.getInt("id");
+            String titre = resultSet.getString("titre_article");
+            String auteur = resultSet.getString("auteur_article");
+            String contenu = resultSet.getString("contenu_article");
+            String urls = resultSet.getString("image_article");
+            int  isBest = resultSet.getInt("is_best");
+            LocalDate date = resultSet.getDate("date_a").toLocalDate();
+            int categoryId = resultSet.getInt("id_categ_a_id");
+            Blog article = new Blog(id, titre, auteur, contenu, urls, isBest, date, categoryId);
+            blogList.add(article);
+        }
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+    return blogList;
+}
+public List<PostLike> getAllLikesForPost() throws SQLException {
+    List<PostLike> likes = new ArrayList<>();
+
+    // Connexion à la base de données
+ Connection cnx = MyDB.getInsatnce().getConnection();
+    // Préparation de la requête SQL pour récupérer les likes de l'article
+    String sql = "SELECT * FROM `like` ";
+    PreparedStatement stmt = cnx.prepareStatement(sql);
+  
+
+    // Exécution de la requête
+    ResultSet rs = stmt.executeQuery();
+
+    // Parcours des résultats pour créer les objets PostLike correspondants
+   while (rs.next()) {
+            int id = rs.getInt("id");
+            int articleId = rs.getInt("articles_id");
+            int userId = rs.getInt("user_id");
+            System.out.println("id: " + id + ", articles_id: " + articleId + ", user_id: " + userId);
+         }
+
+ 
+
     return likes;
 }
-
-
-  
 
 
 }

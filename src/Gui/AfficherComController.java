@@ -106,7 +106,7 @@ BlogService bb= new BlogService();
             colDate.setCellValueFactory(cellData -> {
         comment comment = cellData.getValue();
         if (comment != null && comment.getDate_com() != null) {
-            return new SimpleStringProperty(comment.getDate_com().toString()); // Remplacez getDate_com() par votre propre méthode pour obtenir la date du commentaire
+            return new SimpleStringProperty(comment.getDate_com().toString()); 
         } else {
             return new SimpleStringProperty("");
         }
@@ -128,7 +128,7 @@ colArticle.setCellFactory(column -> {
                         setText(Article);
                     }
                 } private String getArticle(Integer itemId) {
-                    List<Blog> categories = bb.Recuperer(); // Méthode fictive pour obtenir la liste des catégories
+                    List<Blog> categories = bb.Recuperer(); 
                     for (Blog categorie : categories) {
                         if (categorie.getID() == itemId) {
                             return categorie.getTitre_article();
@@ -227,14 +227,12 @@ private List<comment> loadcommentsFromDatabase() {
     c.setDate_com(java.sql.Timestamp.valueOf(lbdate.getText()));
     c.setContenu_c(lbcom.getText());
     
-    // Mettre à jour l'état "approved" du commentaire en fonction de l'état de la case à cocher
     if (checkapproved.isSelected()) {
         c.setApproved(1);
     } else {
         c.setApproved(0);
     }
     
-    // Appeler la méthode de service pour mettre à jour le commentaire dans la base de données
     cc.ModifierCo(c);
       Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setContentText("commentaire modifié avec succes");

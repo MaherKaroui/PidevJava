@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+
+<AnchorPane id="AnchorPane" prefHeight="481.0" prefWidth="705.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.171" fx:controller="Gui.AfficherLikesController">
+   <children>
+      <TableView fx:id="tabLikes" layoutX="23.0" layoutY="22.0" onMouseClicked="#listeLikes" prefHeight="432.0" prefWidth="671.0" styleClass="tableview" stylesheets="@Stylee1.css" tableMenuButtonVisible="true">
+        <columns>
+          <TableColumn fx:id="colArticle" prefWidth="75.0" text="l'article" />
+          <TableColumn fx:id="colNBlikes" prefWidth="141.0" text="Nombre de like" />
+            <TableColumn fx:id="colUser" prefWidth="141.0" text="User" />
+        </columns>
+      </TableView>
+   </children>
+</AnchorPane>

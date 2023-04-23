@@ -72,6 +72,7 @@ import javafx.stage.Stage;
 import javax.imageio.ImageIO;
 import java.lang.reflect.Field;
 import java.util.Comparator;
+import javafx.scene.control.ContentDisplay;
 
 /**
  * FXML Controller class
@@ -149,8 +150,6 @@ public class ArticleController implements Initializable {
     @FXML
     private CheckBox checkbest;
     @FXML
-    private TableColumn<?, ?> commentaires;
-    @FXML
     private TableColumn<Blog, String> Contenu;
     @FXML
     private Button reset;
@@ -159,6 +158,8 @@ public class ArticleController implements Initializable {
     private ObservableList<Blog> articlesObservableList = FXCollections.observableArrayList(); // Liste observable pour les articles
     private ComboBox<String> propertyComboBox;
     private ComboBox<String> sortOrderComboBox;
+    @FXML
+    private TableColumn<Blog, Image> image_article;
 
     /**
      * Initializes the controller class.
@@ -194,7 +195,7 @@ public class ArticleController implements Initializable {
                 }
             }
         });
-        TablePosts.getColumns().add(Bbest);
+        // TablePosts.getColumns().add(Bbest);
 
         categorie.setCellValueFactory(new PropertyValueFactory<>("id_categ_a_id"));
         categorie.setCellFactory(column -> {
@@ -224,35 +225,53 @@ public class ArticleController implements Initializable {
             };
         });
 
-        boolean add = TablePosts.getColumns().add(categorie);
-
+        //boolean add = TablePosts.getColumns().add(categorie);
         // Charger les données dans le TableView
         List<Blog> listePosts = loadPostsFromDatabase(); // Remplacer cette méthode par votre logique pour charger les données des posts depuis la base de données
         TablePosts.setItems(FXCollections.observableArrayList(listePosts));
 
+        image_article.setCellFactory(column -> {
+            return new TableCell<Blog, Image>() {
+                private final ImageView imageView = new ImageView();
+
+                {
+                    setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
+                    setGraphic(imageView);
+                }
+
+                @Override
+                protected void updateItem(Image item, boolean empty) {
+                    super.updateItem(item, empty);
+                    if (empty || item == null) {
+                        imageView.setImage(null);
+                    } else {
+                        imageView.setImage(item);
+                    }
+                }
+            };
+        });
 
     }
 
     @FXML
     private void back(ActionEvent event) {
     }
-@FXML
-private void Menu(ActionEvent event) throws IOException {
-    // Récupérer la fenêtre actuelle
-    Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-    
-    // Masquer la fenêtre actuelle
-    currentStage.hide();
-    
-    // Charger la nouvelle fenêtre "AfficherBlog.fxml"
-    Parent root = FXMLLoader.load(getClass().getResource("AfficherBlog.fxml"));
-    Scene scene = new Scene(root);
-    Stage stage = new Stage();
-    stage.setScene(scene);
-    stage.show();
-}
 
+    @FXML
+    private void Menu(ActionEvent event) throws IOException {
+        // Récupérer la fenêtre actuelle
+        Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
+        // Masquer la fenêtre actuelle
+        currentStage.hide();
+
+        // Charger la nouvelle fenêtre "AfficherBlog.fxml"
+        Parent root = FXMLLoader.load(getClass().getResource("AfficherBlog.fxml"));
+        Scene scene = new Scene(root);
+        Stage stage = new Stage();
+        stage.setScene(scene);
+        stage.show();
+    }
 
     @FXML
     private void ListePosts() {
@@ -260,21 +279,17 @@ private void Menu(ActionEvent event) throws IOException {
         titre_article.setText(String.valueOf(t.getTitre_article()));
         auteur_article.setText(t.getAuteur_article());
         contenu_c.setText(t.getContenu_article());
-        Image image = new Image(getClass().getResourceAsStream(t.getImage()));
-       t.setImage("file:/C:Bureau/test_desck/img/");
-        
-  Scene scene = checkbest.getScene();
 
-    CheckBox checkbestInScene = (CheckBox) scene.lookup("#checkbest");
-    checkbestInScene.setSelected(true);
-    checkbestInScene.setIndeterminate(true);
-        String path = "file:/C:/Users/saada/OneDrive/Bureau/test_desck/" + t.getImage();
-            //Image image = new Image("file:/C:/Users/saada/OneDrive/Bureau/test_desck/img" + t.getImage());
+        Scene scene = checkbest.getScene();
+
+        CheckBox checkbestInScene = (CheckBox) scene.lookup("#checkbest");
+        checkbestInScene.setSelected(true);
+        checkbestInScene.setIndeterminate(true);
 
         CategCombox.setValue(Integer.toString(t.getId_categ_a_id()));
 
-        url_image.setText(t.getImage());
-    imageP.setImage(image);
+        Image image = new Image("file:/C:/Users/saada/OneDrive/Bureau/test_desck/src/superMarket/images/" + t.getImage());
+        imageP.setImage(image);
 
     }
 
@@ -296,13 +311,15 @@ private void Menu(ActionEvent event) throws IOException {
 
         Random rand = new Random();
         int x = rand.nextInt(1000);
+
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Upload File Path");
         fileChooser.getExtensionFilters().addAll(
                 new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.gif", "*.jpeg"));
         File file = fileChooser.showOpenDialog(null);
         //String DBPath = "C:\\\\xampp\\\\htdocs\\\\Version-Integre\\\\public\\\\uploads\\\\" + x + ".jpg";
-        String DBPath = "" + x + ".jpg";
+        //String DBPath = "" + x + ".jpg";
+        String DBPath = "C:\\Users\\saada\\OneDrive\\Bureau\\test_desck\\src\\superMarket\\image\\" + x + ".jpg";
 
         if (file != null) {
             FileInputStream Fsource = new FileInputStream(file.getAbsolutePath());
@@ -332,6 +349,7 @@ private void Menu(ActionEvent event) throws IOException {
             System.out.println("error");
 
         }
+
     }
 
     @FXML
@@ -371,7 +389,10 @@ private void Menu(ActionEvent event) throws IOException {
             b.setTitre_article(titreb);
             b.setAuteur_article(auteurb);
             b.setContenu_article(contenub);
-            b.setImage(idxx);
+
+            // b.setImage(idxx);
+            b.setImage(img);
+
             b.setIs_best(n);
 
             b.setDate(LocalDate.MAX);
@@ -436,12 +457,11 @@ private void Menu(ActionEvent event) throws IOException {
         categories.add("healthy");
          */
         List<String> categories = new ArrayList<>();
-        CategorieService categorieService = new CategorieService(); // Instancier votre service CategorieA
-        List<categorieA> categorieAList = categorieService.Recuperer(); // Appeler la méthode Recuperer() pour récupérer les catégories depuis votre service
+        CategorieService categorieService = new CategorieService();
+        List<categorieA> categorieAList = categorieService.Recuperer();
 
-        // Convertir les objets categorieA en chaînes de caractères
         for (categorieA categorieA : categorieAList) {
-            //categories.add(categorieA.toString()); // Ou utilisez la méthode appropriée pour obtenir la chaîne de caractères souhaitée
+            //categories.add(categorieA.toString()); 
             categories.add(categorieA.getType());
         }
 
@@ -518,48 +538,39 @@ private void Menu(ActionEvent event) throws IOException {
     private void reset(ActionEvent event) {
     }
 
-
     private void Trie(ActionEvent event) {
-          String propertyName = propertyComboBox.getValue(); // Récupérer la propriété de tri sélectionnée
+        String propertyName = propertyComboBox.getValue(); // Récupérer la propriété de tri sélectionnée
         String sortOrder = sortOrderComboBox.getValue(); // Récupérer l'ordre de tri sélectionné
-        String motCle =recherche.getText(); // Récupérer le mot-clé de recherche depuis le champ de texte
+        String motCle = recherche.getText(); // Récupérer le mot-clé de recherche depuis le champ de texte
 
-  
-    
-    // Utiliser un stream pour trier les articles en fonction de la propriété et de l'ordre de tri spécifiés
-    Comparator<Blog> comparator = (b1, b2) -> {
-        try {
-            Field field = Blog.class.getDeclaredField(propertyName);
-            field.setAccessible(true);
-            Comparable propValue1 = (Comparable) field.get(b1);
-            Comparable propValue2 = (Comparable) field.get(b2);
-            return sortOrder.equals("ASC") ? propValue1.compareTo(propValue2) : propValue2.compareTo(propValue1);
-        } catch (NoSuchFieldException | IllegalAccessException ex) {
-            System.err.println("Error sorting articles by property: " + ex.getMessage());
-            return 0;
-        }
-    };
+        // Utiliser un stream pour trier les articles en fonction de la propriété et de l'ordre de tri spécifiés
+        Comparator<Blog> comparator = (b1, b2) -> {
+            try {
+                Field field = Blog.class.getDeclaredField(propertyName);
+                field.setAccessible(true);
+                Comparable propValue1 = (Comparable) field.get(b1);
+                Comparable propValue2 = (Comparable) field.get(b2);
+                return sortOrder.equals("ASC") ? propValue1.compareTo(propValue2) : propValue2.compareTo(propValue1);
+            } catch (NoSuchFieldException | IllegalAccessException ex) {
+                System.err.println("Error sorting articles by property: " + ex.getMessage());
+                return 0;
+            }
+        };
 
-    articlesObservableList.sort(comparator);
-       
+        articlesObservableList.sort(comparator);
+
     }
-      // Méthode pour récupérer tous les articles triés en fonction de la propriété spécifiée
-  
+    // Méthode pour récupérer tous les articles triés en fonction de la propriété spécifiée
+
     @FXML
     private void Recherche(KeyEvent event) {
-        Blog bb=new Blog();
-        String motCle = recherche.getText(); 
-        BlogService b=new BlogService();
-    List<Blog> resultats = b.recherche(motCle); 
-   
-        
-        
-           TablePosts.setItems(FXCollections.observableArrayList(resultats));
-          
+        Blog bb = new Blog();
+        String motCle = recherche.getText();
+        BlogService b = new BlogService();
+        List<Blog> resultats = b.recherche(motCle);
 
-        
-        
+        TablePosts.setItems(FXCollections.observableArrayList(resultats));
+
     }
 
-   
 }
