@@ -40,10 +40,6 @@ public class DetailPostController implements Initializable {
     private Label date_a;
     private Label auteur_article;
     @FXML
-    private Button modif;
-    @FXML
-    private Button sup;
-    @FXML
     private TextField tftitre;
     @FXML
     private TextField tfauteur;
@@ -100,13 +96,6 @@ public class DetailPostController implements Initializable {
         imageView.setImage(image);
     }
 
-    @FXML
-    private void modifier(ActionEvent event) {
-    }
-
-    @FXML
-    private void supprimer(ActionEvent event) {
-    }
 
     private void commenter(ActionEvent event) {
         try {

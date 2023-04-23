@@ -72,6 +72,7 @@ import javafx.stage.Stage;
 import javax.imageio.ImageIO;
 import java.lang.reflect.Field;
 import java.util.Comparator;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ContentDisplay;
 
 /**
@@ -419,22 +420,47 @@ public class ArticleController implements Initializable {
 
     @FXML
     private void ModifierPost(ActionEvent event) {
-        BlogService hs = new BlogService();
+        BlogService cat = new BlogService();
 
-        CategorieService cs = new CategorieService();
-        if (id_categ_a_id != null) {
-            categorieA cours = cs.getCategorieById(Integer.parseInt(id_categ_a_id.getValue()));
-            // Utiliser la variable cours comme prévu
-
-            Blog h1 = new Blog(cours, titre_article.getText(), auteur_article.getText(), contenu_c.getText(), url_image.getText(), Integer.parseInt(checkbest.getText()));
-            hs.ModifierBlog2(b);
-
-            Alert confirmation = new Alert(Alert.AlertType.INFORMATION);
-            confirmation.setContentText("Product est modifié avec succès");
-            confirmation.show();
-        } else {
-            System.out.println("ya chaima eli taamel fih ghalet");
+        Blog b = TablePosts.getSelectionModel().getSelectedItem();
+        if (b == null) {
+            Alert alert = new Alert(AlertType.ERROR);
+            alert.setTitle("Erreur");
+            alert.setHeaderText(null);
+            alert.setContentText("Veuillez sélectionner un article à modifier.");
+            alert.showAndWait();
+            return;
         }
+        b.setTitre_article(titre_article.getText());
+        b.setAuteur_article(auteur_article.getText());
+        b.setContenu_article(contenu_c.getText());
+
+        String selectedCategorie = CategCombox.getValue();
+        categorieA categorie = null;
+        CategorieService categorieService = new CategorieService();
+List<categorieA> listeCategories = categorieService.Recuperer();
+
+        for (categorieA categories : listeCategories) {
+            if (categories.getType().equals(selectedCategorie)) {
+                categorie = categories;
+                break;
+            }
+        }
+        if (categorie == null) {
+            // La catégorie sélectionnée n'a pas été trouvée dans la liste
+            // Traitez cette erreur ici
+        } else {
+            b.setId_categ_a_id(categorie.getId());
+        }
+
+        int is_best = checkbest.isSelected() ? 1 : 0;
+        b.setIs_best(is_best);
+        b.setImage(url_image.getText());
+
+        cat.ModifierBlog2(b);
+
+        TablePosts.refresh();
+        refresh();
     }
 
     @FXML
