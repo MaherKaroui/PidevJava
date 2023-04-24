@@ -10,6 +10,7 @@ import Entity.PostLike;
 import Entity.categorieA;
 import Entity.comment;
 import Util.MyDB;
+import java.io.File;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.DriverManager;
@@ -28,8 +29,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.scene.control.Alert;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 
 /**
  *
@@ -911,6 +915,31 @@ public List<PostLike> getAllLikesForPost() throws SQLException {
 
     return likes;
 }
+public List<ImageView> Recuperer_images(int id) throws SQLException{
+    Connection cnx = MyDB.getInsatnce().getConnection();
+
+    String query = "SELECT image_article FROM articles WHERE id = ?";
+    PreparedStatement stmt = cnx.prepareStatement(query);
+    stmt.setInt(1, id); 
+    ResultSet rs = stmt.executeQuery();
+
+    List<ImageView> imageViews = new ArrayList<>();
+    while (rs.next()) {
+        String imagePath = rs.getString("image_article");
+        if (imagePath != null) {
+            File file = new File(imagePath);
+            Image image = new Image(file.toURI().toString());
+            ImageView imageView = new ImageView(image);
+            imageViews.add(imageView);
+        }
+
+
+    }
+
+    return imageViews;
+}
+
+
 
 
 }

@@ -5,19 +5,14 @@
  */
 package Entity;
 
-import java.io.ByteArrayInputStream;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.SimpleObjectProperty;
-import javafx.beans.property.SimpleStringProperty;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 
 /**
  *
@@ -71,9 +66,9 @@ public class Blog {
         this.comments = comments;
         this.categories = categories;
     }
-    private List<comment> comments; // Ajoutez cet attribut pour stocker les catégories associées au blog
+    private List<comment> comments; 
 
-    private List<categorieA> categories; // Ajoutez cet attribut pour stocker les catégories associées au blog
+    private List<categorieA> categories; 
 
     public Blog(int ID, int id_categ_a_id, String titre_article, String contenu_article, String auteur_article, String image, Date date, boolean is_best) {
         this.ID = ID;
@@ -85,7 +80,7 @@ public class Blog {
         this.auteur_article = auteur_article;
         this.image = image;
         this.date = date;
-        this.is_best = is_best ? 1 : 0; // Convertir la valeur booléenne en un entier
+        this.is_best = is_best ? 1 : 0;
     }
 
     public Blog() {
@@ -112,7 +107,7 @@ public class Blog {
         this.contenu_article = contenu_article;
         this.auteur_article = auteur_article;
         this.image = image;
-        this.date = Date.valueOf(date); // convert LocalDate to Date
+        this.date = Date.valueOf(date); 
         this.is_best = is_best;
     }
 
@@ -167,10 +162,10 @@ public class Blog {
 
     public Blog(int id, TableColumn<Blog, String> titre, Label auteur, String contenub, String categorieA, Image imageb) {
         this.ID = id;
-        this.titre_article = titre.getText(); // Supposant que titre.getText() renvoie une chaîne de caractères
-        this.auteur_article = auteur.getText(); // Supposant que auteur.getText() renvoie une chaîne de caractères
+        this.titre_article = titre.getText(); 
+        this.auteur_article = auteur.getText(); 
         this.contenu_article = contenub;
-        this.id_categ_a_id = Integer.parseInt(categorieA); // Supposant que categorieA est une chaîne de caractères représentant un entier
+        this.id_categ_a_id = Integer.parseInt(categorieA); 
 //this.image = new ImageView(imageb);
     }
 
@@ -191,13 +186,13 @@ public class Blog {
         this.titre_article = titreb;
         this.contenu_article = contenub;
         this.id_categ_a_id = Idc;
-    this.is_best = n ? 1 : 0; // Convertir la valeur booléenne en entier (0 ou 1)
+    this.is_best = n ? 1 : 0; 
         this.image = text;
     }
 
      public Blog(categorieA categorie, String titre, String auteur, String contenu, String url, int isBest) {
-categorieA categ = new categorieA(); // Remplacez cette ligne avec l'instanciation réelle de votre objet categorieA
-int id_categorie = categorie.getId(); // Utiliser la méthode getId() pour obtenir la valeur int de l'objet categorieA        this.titre = titre;
+categorieA categ = new categorieA(); 
+int id_categorie = categorie.getId(); 
         this.auteur_article = auteur;
         this.contenu_article = contenu;
         this.image = url;
@@ -254,13 +249,13 @@ int id_categorie = categorie.getId(); // Utiliser la méthode getId() pour obten
         this.auteur_article = auteur_article;
     }
 
-   /* public String getImage() {
+   public String getImage() {
         return image;
     }
 
     public void setImage(String image) {
         this.image = image;
-    }*/
+    }
 
     public Date getDate() {
         return date;
@@ -368,14 +363,7 @@ int id_categorie = categorie.getId(); // Utiliser la méthode getId() pour obten
         return this.comments;
     }
 
-    public List<String> getUrls_images() {
-  List<String> urls = new ArrayList<>();
-    urls.add("file:/C:/Users/saada/OneDrive/Bureau/test_desck/175.jpg");
-
-  return urls;
-
-
-   }
+   
     public void addComment(comment comment) {
         if (this.comments == null) {
             this.comments = new ArrayList<>();
@@ -384,13 +372,7 @@ int id_categorie = categorie.getId(); // Utiliser la méthode getId() pour obten
     }
 
 
-public String getImage() {
-        return this.imagePath;
-    }
 
-    public void setImage(String imagePath) {
-        this.imagePath = imagePath;
-    }
 }
 
 

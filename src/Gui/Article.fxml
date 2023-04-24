@@ -101,13 +101,13 @@
             <Image url="@../superMarket/image/trash.png" />
          </image>
       </ImageView>
-      <TextField fx:id="url_image" layoutX="378.0" layoutY="746.0" />
+      <TextField fx:id="url_image" layoutX="378.0" layoutY="746.0" prefHeight="31.0" prefWidth="534.0" />
       <CheckBox fx:id="checkbest" layoutX="163.0" layoutY="746.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="95.0" text="best" textFill="#544d4d">
          <font>
             <Font name="Arial Bold" size="22.0" />
          </font>
       </CheckBox>
-      <Button fx:id="reset" layoutX="602.0" layoutY="747.0" mnemonicParsing="false" onAction="#reset" prefHeight="25.0" prefWidth="140.0" text="clear" />
+      <Button fx:id="reset" layoutX="911.0" layoutY="747.0" mnemonicParsing="false" onAction="#reset" prefHeight="25.0" prefWidth="140.0" text="clear" />
       <HBox alignment="CENTER" layoutX="935.0" layoutY="20.0" prefHeight="100.0" prefWidth="399.0" styleClass="shopping-online-card" stylesheets="@style.css">
          <children>
             <VBox alignment="CENTER" prefHeight="100.0" prefWidth="203.0">

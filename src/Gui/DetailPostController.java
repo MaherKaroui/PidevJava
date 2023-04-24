@@ -6,14 +6,18 @@
 package Gui;
 
 import Entity.Blog;
+import Service.BlogService;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
+import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -27,6 +31,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
+import javax.swing.JFileChooser;
 
 /**
  * FXML Controller class
@@ -67,6 +72,7 @@ public class DetailPostController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+
         //ToDo
 
     }
@@ -82,20 +88,21 @@ public class DetailPostController implements Initializable {
             tfbest.setText("Sélection : notBest");
         }
 
-        /*String imagePath = blog.getImage();
-    Image image = new Image(new FileInputStream(imagePath));
-    image_article.setImage(image);
-    
-    // appel de la méthode displayImage
-    displayImage(imagePath, image_article);*/
+
+ try {
+        BlogService blogService = new BlogService();
+
+        List<ImageView> imageViews = blogService.Recuperer_images(blog.getID());
+        if (!imageViews.isEmpty()) {
+            image_article.setImage(imageViews.get(0).getImage());
+        }
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+     
     }
 
-    public void displayImage(String imagePath, ImageView imageView) {
-        File file = new File(imagePath);
-        Image image = new Image(file.toURI().toString());
-        imageView.setImage(image);
-    }
-
+  
 
     private void commenter(ActionEvent event) {
         try {

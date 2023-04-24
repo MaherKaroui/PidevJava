@@ -91,7 +91,7 @@ public class Test_desck {
             // p.SupprimerCo(2);
            // ps.AjouterBlog(v);
             //ps.ModifierBlog(5,v);
-            // ps.Recuperer();
+            //ps.Recuperer();
             // ps.SupprimerBlog(9);
             //System.out.println( ps.AfficherArticlesByCategoryId(4));
             //System.out.println(ps.filterArticles(4,"Actualité"));
@@ -101,7 +101,9 @@ public class Test_desck {
             //System.out.println(ps.compterNbCommentaires());
             //System.out.println( ps.getArticlesPopulairesParCommentaires(1));
             // System.out.println(ps.getArticlesPopulairesParCommentaires(3));
-            System.out.println( ps.getAllLikesForPost());
+            //System.out.println( ps.getAllLikesForPost());
+            System.out.println(ps.Recuperer_images(54));
+            
         }
         
     }

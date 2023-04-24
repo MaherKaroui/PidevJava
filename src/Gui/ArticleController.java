@@ -74,6 +74,7 @@ import java.lang.reflect.Field;
 import java.util.Comparator;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ContentDisplay;
+import org.apache.commons.io.FilenameUtils;
 
 /**
  * FXML Controller class
@@ -308,7 +309,7 @@ public class ArticleController implements Initializable {
     }
 
     @FXML
-    private void AddImage(ActionEvent event) throws FileNotFoundException, IOException {
+   /* private void AddImage(ActionEvent event) throws FileNotFoundException, IOException {
 
         Random rand = new Random();
         int x = rand.nextInt(1000);
@@ -320,7 +321,10 @@ public class ArticleController implements Initializable {
         File file = fileChooser.showOpenDialog(null);
         //String DBPath = "C:\\\\xampp\\\\htdocs\\\\Version-Integre\\\\public\\\\uploads\\\\" + x + ".jpg";
         //String DBPath = "" + x + ".jpg";
-        String DBPath = "C:\\Users\\saada\\OneDrive\\Bureau\\test_desck\\src\\superMarket\\image\\" + x + ".jpg";
+        //String DBPath = "C:/Users/saada/OneDrive/Bureau/test_desck/src/superMarket/image/" + x + ".jpg";
+String DBPath = "C:/Users/saada/OneDrive/Bureau/test_desck/src/img/" + x + ".jpg";
+
+b.setImage(DBPath);
 
         if (file != null) {
             FileInputStream Fsource = new FileInputStream(file.getAbsolutePath());
@@ -333,7 +337,7 @@ public class ArticleController implements Initializable {
             int len;
             len = path.length();
 
-            res = path.substring(47, len);
+res = FilenameUtils.removeExtension(file.getName());
             System.out.println(res);
             Image img = new Image(file.toURI().toString());
             imageP.setImage(img);
@@ -351,66 +355,95 @@ public class ArticleController implements Initializable {
 
         }
 
+    }*/
+  
+private void AddImage(ActionEvent event) throws FileNotFoundException, IOException {
+    Random rand = new Random();
+    int x = rand.nextInt(1000);
+
+    FileChooser fileChooser = new FileChooser();
+    fileChooser.setTitle("Upload File Path");
+    fileChooser.getExtensionFilters().addAll(
+            new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.gif", "*.jpeg"));
+    File file = fileChooser.showOpenDialog(null);
+    String DBPath = "C:/Users/saada/OneDrive/Bureau/test_desck/src/img/" + x + ".jpg";
+    System.out.println("DBPath: " + DBPath);
+
+    if (file != null) {
+        FileInputStream Fsource = new FileInputStream(file.getAbsolutePath());
+        FileOutputStream Fdestination = new FileOutputStream(DBPath);
+        BufferedInputStream bin = new BufferedInputStream(Fsource);
+        BufferedOutputStream bou = new BufferedOutputStream(Fdestination);
+        System.out.println(file.getAbsoluteFile());
+
+        try {
+            int b = 0;
+            while ((b = bin.read()) != -1) {
+                bou.write(b);
+            }
+        } catch (IOException ex) {
+            System.err.println("Error while reading or writing file: " + ex.getMessage());
+        } finally {
+            bin.close();
+            bou.close();
+        }
+
+        String path = file.getAbsolutePath();
+        String res;
+        int len;
+        len = path.length();
+
+        res = file.getName();
+        System.out.println(res);
+        Image img = new Image(file.toURI().toString());
+        imageP.setImage(img);
+        url_image.setText(DBPath);
+
+        File f = new File(DBPath);
+        if (f.exists()) {
+            System.out.println("Image file exists at location: " + DBPath);
+        } else {
+            System.out.println("Image file does not exist at location: " + DBPath);
+        }
+    } else {
+        System.out.println("error");
+    }
+}
+   @FXML
+private void Add(ActionEvent event) throws SQLException, IOException {
+    BlogService sc = new BlogService();
+    String titreb = titre_article.getText();
+    String auteurb = auteur_article.getText();
+    String cc = CategCombox.getValue();
+    String img = url_image.getText();
+    boolean isSelected = checkbest.isSelected();
+    int n = isSelected ? 1 : 0;
+    String contenub = contenu_c.getText();
+    Image imageb = imageP.getImage();
+
+    int Idc = 0;
+    if (cc != null) {
+        Idc = sc.chercherCategorieA(cc);
     }
 
-    @FXML
-    private void Add(ActionEvent event) throws SQLException, IOException {
-        Blog b = new Blog();
-        BlogService sc = new BlogService();
-        String titreb = titre_article.getText();
-        String auteurb = auteur_article.getText();
-        String cc = CategCombox.getValue();
-        String img = url_image.getText();
-        boolean isSelected = checkbest.isSelected();
-        if (isSelected) {
-            isSelected = true;
-        } else {
-            isSelected = false;
-        }
-        String displayText = isSelected ? "best" : "not best";
-        System.out.println(displayText);
-        Integer n = isSelected ? 1 : 0;
-
-        String contenub = contenu_c.getText();
-        Image imageb = imageP.getImage();
-
-        int Idc = 0;
-        if (cc != null) {
-            Idc = sc.chercherCategorieA(cc);
-        }
-
-        // Vérifier si tous les champs sont remplis
-        if (titreb.isEmpty() || cc == null || contenub.isEmpty() || imageb == null) {
-            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-            alert.setContentText("Champs vides");
-            alert.setTitle("Problème");
-            alert.setHeaderText(null);
-            alert.showAndWait();
-        } else {
-            b.setTitre_article(titreb);
-            b.setAuteur_article(auteurb);
-            b.setContenu_article(contenub);
-
-            // b.setImage(idxx);
-            b.setImage(img);
-
-            b.setIs_best(n);
-
-            b.setDate(LocalDate.MAX);
-            b.setId_categ_a_id(Idc);
-            Blog v = new Blog(titreb, auteurb, contenub, url_image.getText(), n, LocalDate.MAX, Idc);
-
-            System.out.println(b.toString());
-            sc.AjouterBlog(b);
-
-            TablePosts.refresh();
-
-            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-            alert.setContentText("Blog ajouté");
-            alert.showAndWait();
-            TablePosts.refresh();
-        }
+    // Vérifier si tous les champs sont remplis
+    if (titreb.isEmpty() || cc == null || contenub.isEmpty() || imageb == null) {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setContentText("Champs vides");
+        alert.setTitle("Problème");
+        alert.setHeaderText(null);
+        alert.showAndWait();
+    } else {
+        Blog b = new Blog(titreb, auteurb, contenub, img, n, LocalDate.now(), Idc);
+        sc.AjouterBlog(b);
+        System.out.println(b);
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setContentText("Blog ajouté");
+        alert.showAndWait();
+        TablePosts.refresh();
+        refresh();
     }
+}
 
     public void delete() {
         BlogService sv = new BlogService();
@@ -438,7 +471,7 @@ public class ArticleController implements Initializable {
         String selectedCategorie = CategCombox.getValue();
         categorieA categorie = null;
         CategorieService categorieService = new CategorieService();
-List<categorieA> listeCategories = categorieService.Recuperer();
+        List<categorieA> listeCategories = categorieService.Recuperer();
 
         for (categorieA categories : listeCategories) {
             if (categories.getType().equals(selectedCategorie)) {
@@ -447,8 +480,7 @@ List<categorieA> listeCategories = categorieService.Recuperer();
             }
         }
         if (categorie == null) {
-            // La catégorie sélectionnée n'a pas été trouvée dans la liste
-            // Traitez cette erreur ici
+
         } else {
             b.setId_categ_a_id(categorie.getId());
         }
