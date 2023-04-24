@@ -151,6 +151,16 @@ public class DetailsFrontController implements Initializable {
         tfdate.setText("Date : " + String.valueOf(blog.getDate()));
         tfauteur.setText("Auteur: " + blog.getAuteur_article());
         tfid.setText(Integer.toString(blog.getID()));
+        try {
+        BlogService blogService = new BlogService();
+
+        List<ImageView> imageViews = blogService.Recuperer_images(blog.getID());
+        if (!imageViews.isEmpty()) {
+            imgP.setImage(imageViews.get(0).getImage());
+        }
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
 
     }
 

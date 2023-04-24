@@ -8,6 +8,7 @@ package Gui;
 import Entity.Blog;
 import Service.BlogService;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -101,8 +102,16 @@ public class BlogCellFront extends ListCell<Blog>  {
           
             // Nbre_chmbreLabel.setText("Le nombre de chambre encore disponible : "+String.valueOf(cours.getNbre_chambres()));
             date_a.setText("Date : " + String.valueOf(blog.getDate()));
-            Image image = new Image("file:/C:/Users/saada/OneDrive/Bureau/test_desck/175.jpg");
-            imageView.setImage(image);
+          try {
+        BlogService blogService = new BlogService();
+
+        List<ImageView> imageViews = blogService.Recuperer_images(blog.getID());
+        if (!imageViews.isEmpty()) {
+            imageView.setImage(imageViews.get(0).getImage());
+        }
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
             setGraphic(getListCell());
         }
 

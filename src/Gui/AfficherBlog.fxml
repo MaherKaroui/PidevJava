@@ -20,7 +20,7 @@
     <children>
         <AnchorPane id="AnchorPane" layoutY="10.0" prefHeight="754.0" prefWidth="1179.0" stylesheets="@Stylee1.css">
             <children>
-                <ListView fx:id="listeB" layoutX="411.0" layoutY="84.0" onMouseClicked="#modifierBlog" prefHeight="671.0" prefWidth="765.0" stylesheets="@Stylee1.css" AnchorPane.bottomAnchor="-1.0" AnchorPane.leftAnchor="411.0" AnchorPane.rightAnchor="3.0" AnchorPane.topAnchor="84.0" />
+                <ListView fx:id="listeB" layoutX="411.0" layoutY="84.0" onMouseClicked="#modifierBlog" prefHeight="734.0" prefWidth="765.0" stylesheets="@Stylee1.css" AnchorPane.bottomAnchor="-64.0" AnchorPane.leftAnchor="411.0" AnchorPane.rightAnchor="3.0" AnchorPane.topAnchor="84.0" />
                 <Label layoutX="554.0" layoutY="14.0" prefHeight="64.0" prefWidth="410.0" text="La Liste des Posts" textAlignment="CENTER" textFill="#dd6262">
                     <font>
                         <Font name="System Bold Italic" size="43.0" />

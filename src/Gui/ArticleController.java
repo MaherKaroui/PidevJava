@@ -74,6 +74,7 @@ import java.lang.reflect.Field;
 import java.util.Comparator;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ContentDisplay;
+import javafx.scene.layout.Pane;
 import org.apache.commons.io.FilenameUtils;
 
 /**
@@ -115,7 +116,6 @@ public class ArticleController implements Initializable {
     private TableColumn<Blog, String> titre;
     @FXML
     private TableColumn<Blog, Integer> categorie;
-    @FXML
     private TableColumn<Blog, Date> date_a;
 
     @FXML
@@ -132,6 +132,7 @@ public class ArticleController implements Initializable {
 
     private Statement ste;
     private Blog b;
+    
     String query = null;
     Connection connection = null;
     Connection cnx = MyDB.getInsatnce().getConnection();
@@ -152,8 +153,6 @@ public class ArticleController implements Initializable {
     @FXML
     private CheckBox checkbest;
     @FXML
-    private TableColumn<Blog, String> Contenu;
-    @FXML
     private Button reset;
     @FXML
     private TextField recherche;
@@ -166,94 +165,100 @@ public class ArticleController implements Initializable {
     /**
      * Initializes the controller class.
      */
-    @Override
-    public void initialize(URL url, ResourceBundle rb) {
-        // TODO
-        // Charger les données de catégories depuis la source de données (par exemple, une base de données)
-        List<String> categories = loadCategories(); // Remplacez cette ligne avec votre code pour charger les catégories
+   @Override
+public void initialize(URL url, ResourceBundle rb) {
+    // TODO
+    List<String> categories = loadCategories(); 
 
-// Lier les données de catégories à la ComboBox
-        ObservableList<String> categoriesList = FXCollections.observableArrayList(categories);
-        CategCombox.setItems(categoriesList);
-        //List<Integer> best = loadIsBestValues();
-        //ObservableList<Integer> bestList = FXCollections.observableArrayList(best);
-        //is_best.setItems(bestList);
-        Blog b = new Blog();
-        CategorieService cccc = new CategorieService();
+    ObservableList<String> categoriesList = FXCollections.observableArrayList(categories);
+    CategCombox.setItems(categoriesList);
 
-        titre.setCellValueFactory(new PropertyValueFactory<>("titre_article"));
+    Blog b = new Blog();
+    CategorieService cccc = new CategorieService();
 
-        Bauteur.setCellValueFactory(new PropertyValueFactory<>("auteur_article"));
+    titre.setCellValueFactory(new PropertyValueFactory<>("titre_article"));
 
-        Bbest.setCellValueFactory(new PropertyValueFactory<>("is_best"));
-        Bbest.setCellFactory(column -> new TableCell<Blog, Integer>() {
+    Bauteur.setCellValueFactory(new PropertyValueFactory<>("auteur_article"));
+
+    Bbest.setCellValueFactory(new PropertyValueFactory<>("is_best"));
+    Bbest.setCellFactory(column -> new TableCell<Blog, Integer>() {
+        @Override
+        protected void updateItem(Integer item, boolean empty) {
+            super.updateItem(item, empty);
+            if (empty) {
+                setText(null);
+            } else {
+                setText(item == 1 ? "Is Best" : "Not Best");
+            }
+        }
+    });
+
+    categorie.setCellValueFactory(new PropertyValueFactory<>("id_categ_a_id"));
+    categorie.setCellFactory(column -> {
+        return new TableCell<Blog, Integer>() {
             @Override
-            protected void updateItem(Integer item, boolean empty) {
-                super.updateItem(item, empty);
+            protected void updateItem(Integer itemId, boolean empty) {
+                super.updateItem(itemId, empty);
+
+                // Vérifier si la cellule est vide
                 if (empty) {
                     setText(null);
                 } else {
-                    setText(item == 1 ? "Is Best" : "Not Best");
+                    String typeCategorie = getTypeCategorie(itemId);
+                    setText(typeCategorie);
                 }
             }
-        });
-        // TablePosts.getColumns().add(Bbest);
 
-        categorie.setCellValueFactory(new PropertyValueFactory<>("id_categ_a_id"));
-        categorie.setCellFactory(column -> {
-            return new TableCell<Blog, Integer>() {
-                @Override
-                protected void updateItem(Integer itemId, boolean empty) {
-                    super.updateItem(itemId, empty);
-
-                    // Vérifier si la cellule est vide
-                    if (empty) {
-                        setText(null);
-                    } else {
-                        String typeCategorie = getTypeCategorie(itemId);
-                        setText(typeCategorie);
+            private String getTypeCategorie(Integer itemId) {
+                List<categorieA> categories = cccc.Recuperer(); 
+                for (categorieA categorie : categories) {
+                    if (categorie.getId() == itemId) {
+                        return categorie.getType();
                     }
                 }
+                return "Inconnu";
+            }
+        };
+    });
 
-                private String getTypeCategorie(Integer itemId) {
-                    List<categorieA> categories = cccc.Recuperer(); // Méthode fictive pour obtenir la liste des catégories
-                    for (categorieA categorie : categories) {
-                        if (categorie.getId() == itemId) {
-                            return categorie.getType();
+    TableColumn<Blog, Image> image_article = new TableColumn<>("Image");
+    image_article.setCellValueFactory(new PropertyValueFactory<>("image_article"));
+    image_article.setCellFactory(col -> {
+        ImageView imageView = new ImageView();
+        TableCell<Blog, Image> cell = new TableCell<Blog, Image>() {
+            @Override
+            protected void updateItem(Image item, boolean empty) {
+                super.updateItem(item, empty);
+                if (item != null && !empty) {
+                    try {
+                        BlogService blogService = new BlogService();
+                        Blog blog = (Blog) getTableRow().getItem();
+                        List<ImageView> imageViews = blogService.Recuperer_images(blog.getID());
+                        if (!imageViews.isEmpty()) {
+                            String imagePath = imageViews.get(0).getImage().impl_getUrl();
+                            String[] pathArray = imagePath.split("/");
+                            String imageName = pathArray[pathArray.length - 1];
+                            imageView.setImage(imageViews.get(0).getImage());
+                            setText(imageName); // set the text of the cell to the image name
                         }
+                    } catch (SQLException e) {
+                        e.printStackTrace();
                     }
-                    return "Inconnu";
-                }
-            };
-        });
-
-        //boolean add = TablePosts.getColumns().add(categorie);
-        // Charger les données dans le TableView
-        List<Blog> listePosts = loadPostsFromDatabase(); // Remplacer cette méthode par votre logique pour charger les données des posts depuis la base de données
-        TablePosts.setItems(FXCollections.observableArrayList(listePosts));
-
-        image_article.setCellFactory(column -> {
-            return new TableCell<Blog, Image>() {
-                private final ImageView imageView = new ImageView();
-
-                {
-                    setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
                     setGraphic(imageView);
+                } else {
+                    setGraphic(null);
+                    setText(null); // reset the text of the cell
                 }
+            }
+        };
+        return cell;
+    });
 
-                @Override
-                protected void updateItem(Image item, boolean empty) {
-                    super.updateItem(item, empty);
-                    if (empty || item == null) {
-                        imageView.setImage(null);
-                    } else {
-                        imageView.setImage(item);
-                    }
-                }
-            };
-        });
+    TablePosts.getColumns().addAll(titre, Bauteur, Bbest, categorie, image_article);
+    List<Blog> listePosts = loadPostsFromDatabase(); 
+    TablePosts.setItems(FXCollections.observableArrayList(listePosts));
+}
 
-    }
 
     @FXML
     private void back(ActionEvent event) {
@@ -289,9 +294,9 @@ public class ArticleController implements Initializable {
         checkbestInScene.setIndeterminate(true);
 
         CategCombox.setValue(Integer.toString(t.getId_categ_a_id()));
+url_image.setText("C:/Users/saada/OneDrive/Bureau/test_desck/src/img/"+t.getImage());
 
-        Image image = new Image("file:/C:/Users/saada/OneDrive/Bureau/test_desck/src/superMarket/images/" + t.getImage());
-        imageP.setImage(image);
+
 
     }
 
