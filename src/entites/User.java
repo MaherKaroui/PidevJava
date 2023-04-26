@@ -72,6 +72,10 @@ public class User {
     public User() {
 //        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+
+    public User(String Password) {
+        this.Password = Password;
+    }
     
     public int getId() {
         return id;

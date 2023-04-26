@@ -33,6 +33,7 @@
                   <Font size="20.0" />
                </font>
             </Label>
+            <Button fx:id="ResetPassword" layoutX="109.0" layoutY="277.0" mnemonicParsing="false" onAction="#ResetPassword" style="-fx-background-color: #8D4004; -fx-text-fill: white;" text="Reset Password" textFill="#b84654" />
             </children>
         </AnchorPane>
         <Button layoutX="49.0" layoutY="348.0" mnemonicParsing="false" onAction="#userSignUp" prefHeight="32.0" prefWidth="203.0" style="-fx-background-color: #8D4004; -fx-text-fill: white;" text="Sign Up" />

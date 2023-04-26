@@ -4,7 +4,9 @@
  * and open the template in the editor.
  */
 package Services;
-
+import com.twilio.Twilio;
+import com.twilio.rest.api.v2010.account.Message;
+import com.twilio.type.PhoneNumber;
 import entites.User;
 import util.dbconnection;
 import java.sql.Connection;
@@ -14,6 +16,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javax.swing.JOptionPane;
 import org.mindrot.jbcrypt.BCrypt;
 import pidevuser.PidevUser;
 
@@ -25,6 +28,8 @@ public class ServiceUser {
      private static ServiceUser instance;
      Connection cn = dbconnection.getInstance().getConnection();
     dbconnection cnx = dbconnection.getInstance();
+     public static final String ACCOUNT_SID = "ACcc92f26eb952fc53fb21ffcbf0b95e41";
+    public static final String AUTH_TOKEN = "e17f4a7192326c485a9c58bd11119fe1";
     public ServiceUser(){
         
     }
@@ -113,6 +118,12 @@ public class ServiceUser {
         pre.setInt(1, 1);
         pre.setString(2, email);
         pre.executeUpdate();
+          JOptionPane.showMessageDialog(null, "This account has been temporarily blocked !");  
+            
+            Twilio.init(ACCOUNT_SID, AUTH_TOKEN);
+                    Message message = Message.creator(new PhoneNumber("+21623610318"),
+        new PhoneNumber("+16205091869"), 
+        "This account has been now blocked").create();  
         
     }
      public void unBlockUser(String email) throws SQLException{

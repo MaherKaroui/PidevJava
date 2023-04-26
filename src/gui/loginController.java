@@ -83,7 +83,13 @@ public class loginController {
            
     }
     
-    
+     @FXML
+    private void ResetPassword() throws IOException{
+        
+            PidevUser m = new PidevUser();
+             m.changeScene("/gui/ResetPassword.fxml");
+           
+    }
 
 }
 

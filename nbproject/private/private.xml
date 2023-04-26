@@ -3,10 +3,17 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+            <file>file:/C:/Users/malek/Desktop/Gestionuserjava/src/gui/editprofile.fxml</file>
             <file>file:/C:/Users/malek/Desktop/Gestionuserjava/src/gui/loginController.java</file>
+            <file>file:/C:/Users/malek/Desktop/Gestionuserjava/src/gui/password_reset.fxml</file>
+            <file>file:/C:/Users/malek/Desktop/Gestionuserjava/src/gui/ResetPassword.fxml</file>
+            <file>file:/C:/Users/malek/Desktop/Gestionuserjava/src/gui/login.fxml</file>
+            <file>file:/C:/Users/malek/Desktop/Gestionuserjava/src/Services/ServiceUser.java</file>
+            <file>file:/C:/Users/malek/Desktop/Gestionuserjava/src/entites/User.java</file>
+            <file>file:/C:/Users/malek/Desktop/Gestionuserjava/src/gui/Password_resetController.java</file>
             <file>file:/C:/Users/malek/Desktop/Gestionuserjava/src/pidevuser/PidevUser.java</file>
             <file>file:/C:/Users/malek/Desktop/Gestionuserjava/src/gui/ChatBotController.java</file>
-            <file>file:/C:/Users/malek/Desktop/Gestionuserjava/src/gui/login.fxml</file>
+            <file>file:/C:/Users/malek/Desktop/Gestionuserjava/src/gui/ResetPasswordController.java</file>
             <file>file:/C:/Users/malek/Desktop/Gestionuserjava/src/gui/ChatBot.fxml</file>
             <file>file:/C:/Users/malek/Desktop/Gestionuserjava/src/gui/SignUp.fxml</file>
         </group>
