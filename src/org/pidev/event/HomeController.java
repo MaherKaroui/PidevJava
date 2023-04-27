@@ -34,7 +34,7 @@ public class HomeController implements Initializable {
 
     @FXML
     private void loadBack(ActionEvent event) throws IOException {
-        AnchorPane pane = FXMLLoader.load(getClass().getResource("Main.fxml"));
+        AnchorPane pane = FXMLLoader.load(getClass().getResource("/org/pidev/event/gui/Main.fxml"));
        homePane.getChildren().setAll(pane);
     }
 

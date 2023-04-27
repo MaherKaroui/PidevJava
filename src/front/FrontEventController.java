@@ -53,7 +53,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import org.pidev.event.Event;
+import org.pidev.event.entities.Event;
 import sun.reflect.Reflection;
 
 /**

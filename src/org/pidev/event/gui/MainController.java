@@ -3,9 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package org.pidev.event;
+package org.pidev.event.gui;
 
 //API STUFF
+import org.pidev.event.entities.Event;
 import com.twilio.Twilio;
 import com.twilio.rest.api.v2010.account.Message;
 import com.twilio.type.PhoneNumber;
@@ -77,6 +78,7 @@ import java.net.MalformedURLException;
 import com.itextpdf.io.image.ImageDataFactory;
 import com.itextpdf.kernel.colors.Color;
 import com.itextpdf.kernel.colors.DeviceRgb;
+import java.awt.Desktop;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
@@ -174,7 +176,7 @@ private WebEngine webEngine;
                 }
             }
         });
-        showDirections("Ennasr");
+        //showDirections("Ennasr");
     }
 
     private void autoCompletionLearnWord(String newWord) {
@@ -535,6 +537,18 @@ public void showDirections(String destination) {
     
     webEngine.loadContent(html);
 }
+
+    @FXML
+    private void openHtmlInBrowser(ActionEvent event) {
+            File htmlFile = new File("C:\\Users\\mizoj\\Desktop\\KRAYA\\3rd year\\2EME SEM\\PiDEV\\java\\TEAMWORK\\pidevjava3a54\\src\\rsc\\map.html");
+        if (Desktop.isDesktopSupported()) {
+            try {
+                Desktop.getDesktop().browse(htmlFile.toURI());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 
 
 

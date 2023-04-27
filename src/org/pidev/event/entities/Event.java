@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package org.pidev.event;
+package org.pidev.event.entities;
 
 import java.util.Comparator;
 import java.util.Date;

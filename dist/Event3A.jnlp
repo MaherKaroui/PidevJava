@@ -8,7 +8,7 @@
   </information>
   <resources>
     <j2se version="1.6+" href="http://java.sun.com/products/autodl/j2se"/>
-    <jar href="Event3A.jar" size="95920" download="eager" />
+    <jar href="Event3A.jar" size="96675" download="eager" />
     <jar href="lib\bcpkix-jdk15on-1.68.jar" size="887800" download="eager" />
     <jar href="lib\bcprov-jdk15on-1.68.jar" size="5961178" download="eager" />
     <jar href="lib\commons-codec-1.15.jar" size="353793" download="eager" />
