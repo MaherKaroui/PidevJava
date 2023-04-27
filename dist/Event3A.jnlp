@@ -8,8 +8,33 @@
   </information>
   <resources>
     <j2se version="1.6+" href="http://java.sun.com/products/autodl/j2se"/>
-    <jar href="Event3A.jar" size="65655" download="eager" />
+    <jar href="Event3A.jar" size="74877" download="eager" />
+    <jar href="lib\commons-codec-1.15.jar" size="353793" download="eager" />
+    <jar href="lib\commons-codec-1.9.jar" size="263965" download="eager" />
+    <jar href="lib\commons-io-2.7.jar" size="276413" download="eager" />
+    <jar href="lib\commons-logging-1.2.jar" size="61829" download="eager" />
+    <jar href="lib\controlsfx-8.40.11.jar" size="985420" download="eager" />
+    <jar href="lib\httpasyncclient-4.1.1.jar" size="177013" download="eager" />
+    <jar href="lib\httpclient-4.5.13.jar" size="780321" download="eager" />
+    <jar href="lib\httpclient-4.5.2.jar" size="736658" download="eager" />
+    <jar href="lib\httpcore-4.4.13.jar" size="328593" download="eager" />
+    <jar href="lib\httpcore-4.4.4.jar" size="326724" download="eager" />
+    <jar href="lib\httpcore-nio-4.4.4.jar" size="356091" download="eager" />
+    <jar href="lib\httpmime-4.5.2.jar" size="41029" download="eager" />
+    <jar href="lib\jackson-annotations-2.12.5.jar" size="75704" download="eager" />
+    <jar href="lib\jackson-core-2.12.5.jar" size="365536" download="eager" />
+    <jar href="lib\jackson-databind-2.12.5.jar" size="1515991" download="eager" />
+    <jar href="lib\jackson-datatype-jsr310-2.12.5.jar" size="120362" download="eager" />
+    <jar href="lib\javax.activation-api-1.2.0.jar" size="56674" download="eager" />
+    <jar href="lib\jaxb-api-2.3.1.jar" size="128076" download="eager" />
+    <jar href="lib\jjwt-api-0.11.2.jar" size="78784" download="eager" />
+    <jar href="lib\jjwt-impl-0.11.2.jar" size="78853" download="eager" />
+    <jar href="lib\jjwt-jackson-0.11.2.jar" size="8400" download="eager" />
+    <jar href="lib\json-20160212.jar" size="49176" download="eager" />
     <jar href="lib\mysql-connector-java-5.1.23-bin.jar" size="834126" download="eager" />
+    <jar href="lib\slf4j-api-1.7.30.jar" size="41472" download="eager" />
+    <jar href="lib\twilio-8.21.0.jar" size="4437269" download="eager" />
+    <jar href="lib\unirest-java-1.4.9.jar" size="44604" download="eager" />
   </resources>
   <applet-desc  width="800" height="600" main-class="com.javafx.main.NoJavaFXFallback"  name="Event3A" >
     <param name="requiredFXVersion" value="8.0+"/>
