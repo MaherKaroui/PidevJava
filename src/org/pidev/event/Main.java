@@ -11,6 +11,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+
 /**
  *
  * @author mizoj
@@ -19,14 +20,16 @@ public class Main extends Application {
     
     @Override
     public void start(Stage stage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("Main.fxml"));
-       
+        //Parent root = FXMLLoader.load(getClass().getResource("Main.fxml"));
+       //Parent root = FXMLLoader.load(getClass().getResource("/front/FrontEvent.fxml"));
+       Parent root = FXMLLoader.load(getClass().getResource("Home.fxml"));
         //Parent root = FXMLLoader.load(getClass().getResource("WeatherUI.fxml"));
        
         Scene scene = new Scene(root);
         stage.setTitle("GESTION EVENTS");
         stage.setScene(scene);
         stage.show();
+        
     }
 
     /**

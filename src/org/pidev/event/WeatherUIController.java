@@ -78,7 +78,7 @@ public class WeatherUIController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-
+        
        LocalDate currentDate = LocalDate.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         String formattedDate = currentDate.format(formatter);
@@ -102,16 +102,19 @@ public class WeatherUIController implements Initializable {
             cityName.setText("Weather data not available");
         }
 
+    
+        
     }
 
-    public void testing() {
-        LocalDate currentDate = LocalDate.now();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        String formattedDate = currentDate.format(formatter);
+    public void testing(String date) {
         String city = "Tunis";
         String countryCode = "TN";
+        LocalDate currentDate = LocalDate.now();
+       /*
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        String formattedDate = currentDate.format(formatter);
         String date = formattedDate; // Replace with the desired date in the format "yyyy-MM-dd"
-
+        */
         JSONObject forecast = this.getWeatherForecast(city, countryCode, date);
 
         if (forecast != null) {

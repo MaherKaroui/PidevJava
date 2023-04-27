@@ -8,7 +8,9 @@
   </information>
   <resources>
     <j2se version="1.6+" href="http://java.sun.com/products/autodl/j2se"/>
-    <jar href="Event3A.jar" size="74877" download="eager" />
+    <jar href="Event3A.jar" size="95920" download="eager" />
+    <jar href="lib\bcpkix-jdk15on-1.68.jar" size="887800" download="eager" />
+    <jar href="lib\bcprov-jdk15on-1.68.jar" size="5961178" download="eager" />
     <jar href="lib\commons-codec-1.15.jar" size="353793" download="eager" />
     <jar href="lib\commons-codec-1.9.jar" size="263965" download="eager" />
     <jar href="lib\commons-io-2.7.jar" size="276413" download="eager" />
@@ -21,6 +23,8 @@
     <jar href="lib\httpcore-4.4.4.jar" size="326724" download="eager" />
     <jar href="lib\httpcore-nio-4.4.4.jar" size="356091" download="eager" />
     <jar href="lib\httpmime-4.5.2.jar" size="41029" download="eager" />
+    <jar href="lib\io-7.1.16.jar" size="823411" download="eager" />
+    <jar href="lib\itextpdf-5.5.13.3.jar" size="2334491" download="eager" />
     <jar href="lib\jackson-annotations-2.12.5.jar" size="75704" download="eager" />
     <jar href="lib\jackson-core-2.12.5.jar" size="365536" download="eager" />
     <jar href="lib\jackson-databind-2.12.5.jar" size="1515991" download="eager" />
@@ -31,8 +35,12 @@
     <jar href="lib\jjwt-impl-0.11.2.jar" size="78853" download="eager" />
     <jar href="lib\jjwt-jackson-0.11.2.jar" size="8400" download="eager" />
     <jar href="lib\json-20160212.jar" size="49176" download="eager" />
+    <jar href="lib\kernel-7.1.16.jar" size="1234892" download="eager" />
+    <jar href="lib\layout-7.1.16.jar" size="534661" download="eager" />
     <jar href="lib\mysql-connector-java-5.1.23-bin.jar" size="834126" download="eager" />
+    <jar href="lib\slf4j-api-1.6.1.jar" size="25496" download="eager" />
     <jar href="lib\slf4j-api-1.7.30.jar" size="41472" download="eager" />
+    <jar href="lib\slf4j-simple-1.6.1.jar" size="7669" download="eager" />
     <jar href="lib\twilio-8.21.0.jar" size="4437269" download="eager" />
     <jar href="lib\unirest-java-1.4.9.jar" size="44604" download="eager" />
   </resources>

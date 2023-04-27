@@ -54,6 +54,38 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import sun.reflect.Reflection;
+import org.controlsfx.control.textfield.AutoCompletionBinding;
+import org.controlsfx.control.textfield.TextFields;
+
+// pdf related
+import com.itextpdf.kernel.colors.ColorConstants;
+import com.itextpdf.kernel.geom.PageSize;
+import com.itextpdf.kernel.pdf.*;
+import com.itextpdf.layout.Document;
+import com.itextpdf.layout.element.*;
+import com.itextpdf.layout.property.HorizontalAlignment;
+import com.itextpdf.layout.property.TextAlignment;
+import com.itextpdf.layout.property.UnitValue;
+import javafx.collections.ObservableList;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.net.MalformedURLException;
+import com.itextpdf.io.image.ImageDataFactory;
+import com.itextpdf.kernel.colors.Color;
+import com.itextpdf.kernel.colors.DeviceRgb;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
+import javafx.concurrent.Worker;
+import javafx.event.EventHandler;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.web.WebView;
+import javafx.scene.web.WebEngine;
+import netscape.javascript.JSObject;
 
 /**
  *
@@ -62,7 +94,6 @@ import sun.reflect.Reflection;
 public class MainController implements Initializable {
 
     //private Label label;
-    @FXML
     private TextField tfId;
     @FXML
     private TextField tfNom;
@@ -72,8 +103,6 @@ public class MainController implements Initializable {
     private TextField tfDate;
     @FXML
     private TableView<Event> tvEvents;
-    @FXML
-    private TableColumn<Event, Integer> colId;
     @FXML
     private TableColumn<Event, String> colNom;
     @FXML
@@ -92,6 +121,11 @@ public class MainController implements Initializable {
     @FXML
     private TextField searchField;
 
+    private AutoCompletionBinding<String> autoCompletionBinding;
+    private String[] possibleSuggestions = {"test"};
+
+    private Set<String> possibleSuggestionsSet = new HashSet<>(Arrays.asList(possibleSuggestions));
+
     // Your Twilio Account SID and Auth Token
     public static final String ACCOUNT_SID = "AC3b21d23b8d2a2b69b3da427c1b76d1ac";
     public static final String AUTH_TOKEN = "ed7d1b731e8d3e119898a8cdca453808";
@@ -101,6 +135,10 @@ public class MainController implements Initializable {
     private ObservableList<Event> data;
     @FXML
     private Button btWeather;
+    @FXML
+    private WebView webView;
+    
+private WebEngine webEngine;
 
     @FXML
     private void handleButtonAction(ActionEvent event) {
@@ -117,6 +155,35 @@ public class MainController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         showEvents();
         searchEvents();
+    /*
+        //map stuff    
+        webEngine = webView.getEngine();
+    webEngine.load(getClass().getResource("map.html").toExternalForm());
+      */
+        //learning textfield 
+        autoCompletionBinding = TextFields.bindAutoCompletion(searchField, possibleSuggestionsSet);
+        searchField.setOnKeyPressed(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent ke) {
+                switch (ke.getCode()) {
+                    case ENTER:
+                        autoCompletionLearnWord(searchField.getText().trim());
+                        break;
+                    default:
+                        break;
+                }
+            }
+        });
+        showDirections("Ennasr");
+    }
+
+    private void autoCompletionLearnWord(String newWord) {
+        possibleSuggestionsSet.add(newWord);
+        // we dispose of old binding and recreate a new binding
+        if (autoCompletionBinding != null) {
+            autoCompletionBinding.dispose();
+        }
+        autoCompletionBinding = TextFields.bindAutoCompletion(searchField, possibleSuggestionsSet);
     }
 
     public Connection getConnection() {
@@ -155,7 +222,7 @@ public class MainController implements Initializable {
 
         ObservableList<Event> list = getEventsList();
 
-        colId.setCellValueFactory(new PropertyValueFactory<Event, Integer>("id"));
+        //colId.setCellValueFactory(new PropertyValueFactory<Event, Integer>("id"));
         colNom.setCellValueFactory(new PropertyValueFactory<Event, String>("nom"));
         colType.setCellValueFactory(new PropertyValueFactory<Event, String>("type"));
         colDate.setCellValueFactory(cellData -> {
@@ -168,18 +235,20 @@ public class MainController implements Initializable {
         colNom.setComparator(String::compareToIgnoreCase);
 
         tvEvents.setItems(list);
-        tvEvents.getSortOrder().add(colNom);
-        tvEvents.sort();
+        //tvEvents.getSortOrder().add(colNom);
+        //tvEvents.sort();
+        showDirections("ennasr");
+
 
     }
 
     private void insertEvent() {
         //String query = "INSERT INTO event VALUES (" + tfId.getText() + ",'" + tfNom.getText() + "','" + tfType.getText() + "')";
 
-        String query = "INSERT INTO event VALUES (" + tfId.getText() + ",'" + tfNom.getText() + "','" + tfType.getText() + "','" + tfDate.getText() + "')";
+        String query = "INSERT INTO `event`(`nom`, `type`, `date_event`) VALUES ('" + tfNom.getText() + "','" + tfType.getText() + "','" + tfDate.getText() + "');";
         executeQuery(query);
 
-        sendSms("+21650307811", "A new event:' " + tfNom.getText() + "' has been added!, go check it out");
+        sendSms("+21650307811", "A new event:'" + tfNom.getText() + "' has been added!, go check it out");
         showEvents();
         cleanUp();
         pushNotif("event", "added successfully");
@@ -188,7 +257,7 @@ public class MainController implements Initializable {
     private void updateEvent() {
         //String query = "UPDATE  books SET title  = '" + tfTitle.getText() + "', author = '" + tfAuthor.getText() + "', year = " + tfYear.getText() + ", pages = " + tfPages.getText() + " WHERE id = " + tfId.getText() + "";
 
-        String query = " UPDATE event SET nom ='" + tfNom.getText() + "',type='" + tfType.getText() + "',date_event='" + tfDate.getText() + "' WHERE id =" + tfId.getText() + "";
+        String query = " UPDATE event SET nom ='" + tfNom.getText() + "',type='" + tfType.getText() + "',date_event='" + tfDate.getText() + "' WHERE nom ='" + tfNom.getText() + "'";
         executeQuery(query);
         showEvents();
         cleanUp();
@@ -196,7 +265,7 @@ public class MainController implements Initializable {
     }
 
     private void deleteEvent() {
-        String query = "DELETE FROM event WHERE id =" + tfId.getText() + "";
+        String query = "DELETE FROM event WHERE nom ='" + tfNom.getText() + "'";
         executeQuery(query);
         showEvents();
         cleanUp();
@@ -217,7 +286,7 @@ public class MainController implements Initializable {
     @FXML
     private void handeMouseAction(MouseEvent event) {
         Event e = tvEvents.getSelectionModel().getSelectedItem();
-        tfId.setText(String.valueOf(e.getId()));
+        //tfId.setText(String.valueOf(e.getId()));
         tfNom.setText(e.getNom());
         tfType.setText(e.getType());
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -291,13 +360,14 @@ public class MainController implements Initializable {
     }
 
     public void cleanUp() {
-        tfId.setText("");
+        // tfId.setText("");
         tfNom.setText("");
         tfType.setText("");
+        tfDate.setText("");
 
     }
 
-   /* public static JSONObject getWeatherForecast( String date) {
+    /* public static JSONObject getWeatherForecast( String date) {
          
         try {
             // Replace "city" and "countryCode" with the desired location and "date" with the date in the format "yyyy-MM-dd"
@@ -326,7 +396,7 @@ public class MainController implements Initializable {
         }
         return null;
     }
-*/
+     */
     public void pushNotif(String title, String text) {
         //Image img = new Image ("16px+Free+Set+confirm.png");
         Notifications notificationBuilder = Notifications.create()
@@ -335,22 +405,137 @@ public class MainController implements Initializable {
                 .graphic(null)
                 .hideAfter(Duration.seconds(3))
                 .position(Pos.BOTTOM_RIGHT);
-            notificationBuilder.darkStyle();
+        notificationBuilder.darkStyle();
         notificationBuilder.show();
 
     }
 
     @FXML
     private void showWeather(ActionEvent event) throws IOException {
-       //getWeatherForecast("2023-04-27");
-       
-       AnchorPane pane1 = FXMLLoader.load(getClass().getResource("WeatherUI.fxml"));
-       rootpane.getChildren().setAll(pane1);
-  
-   WeatherUIController e = new WeatherUIController();
-   //JSONObject j =  e.getWeatherForecast("Tunis", "TN", "2023-27-04");
-   
-  e.testing();
+        //getWeatherForecast("2023-04-27");
 
+        AnchorPane pane1 = FXMLLoader.load(getClass().getResource("WeatherUI.fxml"));
+        rootpane.getChildren().setAll(pane1);
+        WeatherUIController e = new WeatherUIController();
+        //JSONObject j =  e.getWeatherForecast("Tunis", "TN", "2023-27-04");
+        e.testing(tfDate.getText());
+
+    }
+
+    public <T> void exportTableViewToPDF(TableView<T> tableView, String fileName) {
+        // Initialize PDF writer
+        PdfWriter writer;
+        try {
+            writer = new PdfWriter(new FileOutputStream(new File(fileName)));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+            return;
+        }
+
+        // Initialize PDF document
+        PdfDocument pdf = new PdfDocument(writer);
+        Document document = new Document(pdf, PageSize.A4);
+// Create a custom color
+        Color customColor = new DeviceRgb(12, 108, 172);
+        // Add title
+        Paragraph title = new Paragraph("COME ONE COME ALL")
+                .setTextAlignment(TextAlignment.CENTER)
+                .setBold()
+                .setFontSize(24)
+                .setMarginBottom(20)
+                .setFontColor(customColor);
+
+        document.add(title);
+
+        // Optionally add an image
+        try {
+            //deja fama librairie testaamel fel image donc explicite hakka chissirech conflict 
+            com.itextpdf.layout.element.Image img = new com.itextpdf.layout.element.Image(ImageDataFactory.create("C:\\Users\\mizoj\\Desktop\\KRAYA\\3rd year\\2EME SEM\\PiDEV\\java\\TEAMWORK\\pidevjava3a54\\src\\org\\pidev\\event\\back-logo.jpeg"))
+                    .setWidth(UnitValue.createPercentValue(50))
+                    .setHorizontalAlignment(HorizontalAlignment.CENTER);
+
+            document.add(img);
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+
+        // Create a table
+        int numOfColumns = tableView.getColumns().size();
+        Table table = new Table(numOfColumns);
+        table.setWidth(UnitValue.createPercentValue(100));
+
+        // Add column headers
+        for (TableColumn<T, ?> col : tableView.getColumns()) {
+            table.addHeaderCell(new Cell()
+                    .add(new Paragraph(col.getText()))
+                    .setBackgroundColor(ColorConstants.LIGHT_GRAY)
+                    .setTextAlignment(TextAlignment.CENTER)
+                    .setBold());
+        }
+
+        // Add rows data
+        ObservableList<T> items = tableView.getItems();
+        for (T item : items) {
+            for (TableColumn<T, ?> col : tableView.getColumns()) {
+                Object cellData = ((TableColumn<T, Object>) col).getCellObservableValue(item).getValue();
+                String cellText = cellData == null ? "" : cellData.toString();
+                table.addCell(new Cell()
+                        .add(new Paragraph(cellText))
+                        .setTextAlignment(TextAlignment.CENTER)
+                        .setPadding(5));
+            }
+        }
+
+        // Add table to document
+        document.add(table);
+        document.close();
+    }
+
+    @FXML
+    private void exportToPdf(ActionEvent event) {
+        String fileName = "exported_data.pdf";
+        exportTableViewToPDF(tvEvents, fileName);
+        pushNotif("PDF", "created");
+    }
+
+
+public void showDirections(String destination) {
+    WebEngine webEngine = webView.getEngine();
+    String apiKey = "AIzaSyAu_mO7cXmq6woA_NFn-idriInCb5wx4DU"; // Replace with your Google Maps API key
+    
+    String html = "<!DOCTYPE html>\n" +
+            "<html>\n" +
+            "<head>\n" +
+            "  <style>\n" +
+            "    #map { height: 100%; }\n" +
+            "    html, body { height: 100%; margin: 0; padding: 0; }\n" +
+            "  </style>\n" +
+            "  <script src=\"https://maps.googleapis.com/maps/api/js?key=" + apiKey + "\"></script>\n" +
+            "  <script>\n" +
+            "    function initMap() {\n" +
+            "      var directionsService = new google.maps.DirectionsService();\n" +
+            "      var directionsRenderer = new google.maps.DirectionsRenderer();\n" +
+            "      var map = new google.maps.Map(document.getElementById('map'));\n" +
+            "      directionsRenderer.setMap(map);\n" +
+            "      navigator.geolocation.getCurrentPosition(function(position) {\n" +
+            "        var origin = { lat: position.coords.latitude, lng: position.coords.longitude };\n" +
+            "        var destination = \"" + destination + "\";\n" +
+            "        var request = { origin: origin, destination: destination, travelMode: 'DRIVING' };\n" +
+            "        directionsService.route(request, function(result, status) {\n" +
+            "          if (status == 'OK') { directionsRenderer.setDirections(result); }\n" +
+            "        });\n" +
+            "      });\n" +
+            "    }\n" +
+            "  </script>\n" +
+            "</head>\n" +
+            "<body onload=\"initMap()\">\n" +
+            "  <div id=\"map\"></div>\n" +
+            "</body>\n" +
+            "</html>";
+    
+    webEngine.loadContent(html);
 }
+
+
+
 }

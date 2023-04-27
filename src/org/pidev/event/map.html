@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        #map {height: 100%; width: 100%;}
+        html, body {height: 100%; margin: 0; padding: 0;}
+    </style>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAu_mO7cXmq6woA_NFn-idriInCb5wx4DU&callback=initMap&libraries=&v=weekly" async></script>
+    <script>
+        let map;
+        let directionsService;
+        let directionsRenderer;
+
+        function initMap() {
+            directionsService = new google.maps.DirectionsService();
+            directionsRenderer = new google.maps.DirectionsRenderer();
+
+            map = new google.maps.Map(document.getElementById("map"), {
+                center: {lat: -34.397, lng: 150.644},
+                zoom: 14,
+            });
+
+            directionsRenderer.setMap(map);
+        }
+
+        function showDirections(destinationAddress) {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition((position) => {
+                    let origin = {
+                        lat: position.coords.latitude,
+                        lng: position.coords.longitude
+                    };
+
+                    const request = {
+                        origin: origin,
+                        destination: destinationAddress,
+                        travelMode: google.maps.TravelMode.DRIVING
+                    };
+
+                    directionsService.route(request, (result, status) => {
+                        if (status === "OK") {
+                            directionsRenderer.setDirections(result);
+                        }
+                    });
+                });
+            } else {
+                alert("Geolocation is not supported by this browser.");
+            }
+        }
+    </script>
+</head>
+<body>
+    <div id="map"></div>
+</body>
+</html>
